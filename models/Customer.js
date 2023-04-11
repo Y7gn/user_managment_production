@@ -1,19 +1,61 @@
-
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const CustomerSchema = new mongoose.Schema(
   {
-    CustomerName: {
+    customername: {
       type: String,
-      required: [true, 'Please provide customer name'],
+      required: [true, "Please provide customer name"],
       maxlength: 50,
     },
-    CustomerStatus: {
-        type: String,
-        enum: ['done', 'waiting', 'refused','unsure'],
-        default: 'waiting customer',
+    phonenumber: {
+      type: String,
+      // required: [true, "Please provide customer name"],
+      maxlength: 50,
     },
-    
+    companypercentage: {
+      type: String,
+    },
+    excesscashcustomer: {
+      type: String,
+    },
+    customerstatus: {
+      type: String,
+      // enum: ["done", "waiting", "refused", "unsure"],
+      // default: "waiting customer",
+    },
+    supportedornot: {
+      type: String,
+      // enum: ["مدعوم", "غير مدعوم"],
+    },
+    salarybank: {
+      type: String,
+      // enum: ["الراجحي", "الاهلي", "الفرنسي"],
+    },
+    financebank: {
+      type: String,
+      // enum: ["one", "two", "three", "four"],
+    },
+    obligations: {
+      type: String,
+      // enum: [
+      //   "امكان",
+      //   "بنك التسليف",
+      //   "بنك التنمية",
+      //   "سيارة",
+      //   "شركة اليسر",
+      //   "نايفات",
+      // ],
+    },
+    buildingPlace: {
+      type: String,
+      // enum: ["نجران", "القويقعه", "تربه"],
+    },
+    CompanyPercentage: {
+      type: String,
+      // enum: ["done", "wgaiting", "refused", "unsure"],
+      // default: "waiting customer",
+    },
+
     // position: {
     //   type: String,
     //   required: [true, 'Please provide position'],
@@ -31,11 +73,11 @@ const CustomerSchema = new mongoose.Schema(
     // },
     createdBy: {
       type: mongoose.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'Please provide user'],
+      ref: "User",
+      required: [true, "Please provide user"],
     },
   },
   { timestamps: true }
 );
 
-export default mongoose.model('Customer', CustomerSchema);
+export default mongoose.model("Customer", CustomerSchema);

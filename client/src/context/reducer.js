@@ -33,6 +33,7 @@ import {
   GET_CURRENT_USER_BEGIN,
   GET_CURRENT_USER_SUCCESS,
   GET_EMPLOYEE_SUCCESS,
+  HANDLE_CHANGE1,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -149,6 +150,17 @@ const reducer = (state, action) => {
     return {
       ...state,
       [action.payload.name]: action.payload.value,
+      page: 1,
+    };
+  }
+
+  if (action.type === HANDLE_CHANGE1) {
+    return {
+      ...state,
+      obligations: {
+        ...state.obligations,
+        [action.payload.name]: action.payload.value,
+      },
       page: 1,
     };
   }

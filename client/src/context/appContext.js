@@ -53,14 +53,50 @@ const initialState = {
   showSideBar: false,
   isEditing: false,
   editEmployeeId: "",
-  position: "",
-  company: "",
-  jobLocation: "",
+  // position: "",
+  // company: "",
+  // jobLocation: "",
   // jobLocation:userLocation || '',
-  jobTypeOptions: ["full-time", "part-time", "remote", "internship"],
-  jobType: "full-time",
-  statusOptions: ["interview", "declined", "pending"],
-  status: "pending",
+  // jobTypeOptions: ["full-time", "part-time", "remote", "internship"],
+  // jobType: "full-time",
+
+  customerstatus: "interview",
+  customerstatusOptions: ["interview", "declined", "pending"],
+
+  customername: "",
+  phonenumber: "",
+  companypercentage: "قيد الانتظار",
+  companypercentageOptions: ["قيد الانتظار"],
+
+  excesscashcustomer: "قيد الانتظار",
+  excesscashcustomerOptions: ["قيد الانتظار"],
+  supportedornot: "مدعوم",
+  supportedornotOptions: ["مدعوم", "غير مدعوم"],
+  salarybank: "الاهلي",
+  salarybankOptions: ["الاهلي", "الفرنسي", "الراجحي"],
+  financebank: "الاهلي",
+  financebankOptions: ["الاهلي", "الفرنسي", "الراجحي"],
+
+  obligations: {
+    personalloan: false,
+    creditbank: false,
+    developmentbank: false,
+    car: false,
+    yusrcompany: false,
+    nayifat: false,
+    other: "",
+  },
+  obligationsOptions: [
+    "امكان",
+    "بنك التسليف",
+    "بنك التنمية",
+    "سيارة",
+    "شركة اليسر",
+    "نايفات",
+  ],
+  buildingPlace: "",
+  buildingPlaceOptions: ["قيد الانتظار", "نجران", "القويقعه", "تربه"],
+
   jobs: [],
   employees: [],
   totalJobs: 0,
@@ -68,12 +104,15 @@ const initialState = {
   page: 1,
   stats: {},
   monthlyApplications: [],
+
   //search
   search: "",
   searchStatus: "all",
   searchType: "all",
   sort: "latest",
   sortOptions: ["latest", "oldest", "a-z", "z-a"],
+
+  //permissions
   permissions: "",
   newcustomername: "",
   newcustomerusername: "",
@@ -234,6 +273,12 @@ const AppProvider = ({ children }) => {
 
   const handleChange = ({ name, value }) => {
     dispatch({ type: "HANDLE_CHANGE", payload: { name, value } });
+  };
+  const handleChange2 = ({ name, value }) => {
+    dispatch({ type: "HANDLE_CHANGE", payload: { name, value } });
+  };
+  const handleChange1 = ({ name, value }) => {
+    dispatch({ type: "HANDLE_CHANGE1", payload: { name, value } });
   };
 
   const clearValues = () => {
@@ -441,6 +486,8 @@ const AppProvider = ({ children }) => {
         changePage,
         getCurrentUser,
         getEmployee,
+        handleChange1,
+        handleChange2,
       }}
     >
       {children}

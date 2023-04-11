@@ -1,4 +1,4 @@
-import Logo from "./Logo";
+// import Logo from "./Logo";
 import Loading from "./Loading";
 import Alert from "./Alert";
 
@@ -17,9 +17,10 @@ import ChartsContainer from "./ChartsContainer";
 //Employee
 import EmployeeContainer from "./EmployeeContainer";
 import Employee from "./Employee";
+import checkBoxOptions from "./checkBoxOptions";
 
 export {
-  Logo,
+  // Logo,
   FormRow,
   Alert,
   Navbar,
@@ -33,4 +34,5 @@ export {
   Loading,
   EmployeeContainer,
   Employee,
+  checkBoxOptions,
 };

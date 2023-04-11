@@ -118,7 +118,20 @@ const Wrapper = styled.section`
   .submit-btn {
     width: 15%;
     margin-left: 1rem;
-    background-color: rgba(17, 101, 20, 0.76);
+    /* background-color: rgba(17, 101, 20, 0.76); */
+    background: var(--backgroundColor);
+    color: black;
+  }
+  .choosebtn {
+    width: 15%;
+  }
+
+  .other-input {
+    margin-right: 0.5rem;
+    width: 15%;
+  }
+  .other-multiple {
+    margin-right: 1rem;
   }
   .clear-btn {
     width: 15%;
