@@ -1,11 +1,73 @@
 import { useState } from "react";
-import links from "../utils/links";
+// import links from "../utils/links";
 import { NavLink } from "react-router-dom";
-// import { ReactComponent as DropdownIcon } from '../assets/icons/dropdown.svg';
 import { BsChevronDown } from "react-icons/bs";
-
+import { IoBarChartSharp } from "react-icons/io5";
+import { MdQueryStats } from "react-icons/md";
+import { FaWpforms } from "react-icons/fa";
+import { ImProfile } from "react-icons/im";
+import { useAppContext } from "../context/appContext";
 const NavLinks = ({ ToggleSideBar }) => {
-  const [isDropdownOpen1, setIsDropdownOpen1] = useState(true);
+  const { user } = useAppContext();
+  console.log(user.permissions);
+  const links = [
+    {
+      id: 1,
+      text: "لوحة التحكم",
+
+      path: "/",
+      icon: <IoBarChartSharp />,
+      menuItems: ["لوحة التحكم"],
+    },
+    {
+      id: 2,
+      text: "employee",
+      // path: "all-jobs",
+      path: ["add-employee", "all-employee"],
+      icon: <MdQueryStats />,
+      menuItems: [
+        "add new employee",
+        // "أدوار الموظفين",
+        "all employees",
+        // "الموظف المثالي",
+      ],
+    },
+    {
+      id: 3,
+      text: "العملاء",
+      // path: "add-job",
+      path: ["add-customer", "emp-customers", "all-customers"],
+      icon: <FaWpforms />,
+      menuItems: [
+        "add new customer",
+        // "ارسال عميل",
+        // "الحسابات المنتظرة",
+        "my customers",
+        "all customers",
+      ],
+    },
+    {
+      id: 4,
+      text: "التقارير",
+      // path: 'profile',
+      path: ["profile", "aw", "all-jobs", "add-job"],
+      icon: <ImProfile />,
+      menuItems: [
+        "add customer",
+        "customer Roles",
+        "all customers",
+        "الموظف المثالي",
+      ],
+    },
+    // {
+    //   id: 4,
+    //   text: "reports",
+    //   // path: 'profile',
+    //   path: ["profile", "/", "all-jobs", "add-job"],
+    //   icon: <ImProfile />,
+    //   menuItems: ["add", " roles", " all", "best "],
+    // },
+  ];
   const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
   const [isDropdownOpen3, setIsDropdownOpen3] = useState(false);
 
@@ -23,39 +85,28 @@ const NavLinks = ({ ToggleSideBar }) => {
   });
 
   const firstFunction = () => {
-    // if(firstnavcontainer== true){
-
-    // }
-    console.log("first");
     setActiveStatus((prevState) => ({
-      firstnavcontainer: !prevState.firstnavcontainer,
+      firstnavcontainer: true,
       secondnavcontainer: false,
       thirdnavcontainer: false,
     }));
-    console.log(activeStatus);
   };
   const secondFunction = () => {
-    console.log("second");
     setActiveStatus((prevState) => ({
       ...prevState,
       firstnavcontainer: false,
-      secondnavcontainer: !prevState.secondnavcontainer,
+      secondnavcontainer: true,
       thirdnavcontainer: false,
     }));
     console.log(activeStatus);
   };
   const thirdFunction = () => {
-    // if(){
-
-    // }
-    console.log("third");
     setActiveStatus((prevState) => ({
       ...prevState,
       firstnavcontainer: false,
       secondnavcontainer: false,
-      thirdnavcontainer: !prevState.thirdnavcontainer,
+      thirdnavcontainer: true,
     }));
-    console.log(activeStatus);
   };
   //   console.log(activeStatus.firstnavcontainer);
   return (
@@ -63,31 +114,27 @@ const NavLinks = ({ ToggleSideBar }) => {
       {links.map((link) => {
         const { text, path, id, icon, menuItems } = link;
         return (
-          //   <NavLink
-          //     to={path}
-          //     key={id}
-          //     onClick={ToggleSideBar}
-          //     className={({ isActive }) =>
-          //       isActive ? "nav-link active" : "nav-link"
-          //     }
-          //   >
           <>
+            {/* first item */}
             {id === 1 && (
               <div className="nav-item extra" onClick={firstFunction}>
-                <button
-                  className={`dropdown-toggle ${
-                    activeStatus.firstnavcontainer ? "red-background" : ""
-                  }`}
-                >
-                  <div className="dropdownbtn">
-                    <span className="icon">{icon}</span>
-                    <span>{text}</span>
-                  </div>
-                  <BsChevronDown
-                    className="dropdown-icon"
-                    style={{ display: "none" }}
-                  />
-                </button>
+                <ul className="dropdown-menu">
+                  {menuItems.map((item, index) => (
+                    <NavLink
+                      to={path[index]}
+                      // onClick={ToggleSideBar}
+                      className={({ isActive }) =>
+                        isActive
+                          ? "dropdownmenu-item red-background"
+                          : "dropdownmenu-item"
+                      }
+                    >
+                      <div className="dropdown-itemcontainer">
+                        <span className="dropdown-itemtext">{item}</span>
+                      </div>
+                    </NavLink>
+                  ))}
+                </ul>
               </div>
             )}
 
@@ -119,11 +166,9 @@ const NavLinks = ({ ToggleSideBar }) => {
                             : "dropdownmenu-item"
                         }
                       >
-                        {/* <div className={`dropdownmenu-item`} key={index}> */}
                         <div className="dropdown-itemcontainer">
                           <span className="dropdown-itemtext">{item}</span>
                         </div>
-                        {/* </div> */}
                       </NavLink>
                     ))}
                   </ul>
@@ -158,11 +203,9 @@ const NavLinks = ({ ToggleSideBar }) => {
                             : "dropdownmenu-item"
                         }
                       >
-                        {/* <div className={`dropdownmenu-item`} key={index}> */}
                         <div className="dropdown-itemcontainer">
                           <span className="dropdown-itemtext">{item}</span>
                         </div>
-                        {/* </div> */}
                       </NavLink>
                     ))}
                   </ul>
@@ -170,7 +213,6 @@ const NavLinks = ({ ToggleSideBar }) => {
               </div>
             )}
           </>
-          //   </NavLink>
         );
       })}
     </div>
@@ -213,3 +255,8 @@ export default NavLinks;
   </div>
 )} */
 // }
+
+// hey i have a navbar  and set of premissions coming from the backend
+// {addCustomer: false, editAndDeleteCustomer: false, showAllCustomers: false, addEmployee: false, editAndDeleteEmployee: false, …}
+
+// since add customer if false i don't want to show the add customer section
