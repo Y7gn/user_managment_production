@@ -82,6 +82,7 @@ const Wrapper = styled.aside`
     padding: 1rem 2.5px 1rem 0rem;
   }
   .dropdownbtn {
+    transition: all 0.5s;
     display: flex;
     align-items: center;
     width: 100%;
@@ -135,7 +136,8 @@ const Wrapper = styled.aside`
     place-items: center;
     transition: var(--transition);
   }
-  .active .dropdown-toggle {
+  .active .dropdown-toggle,
+  .indexHover {
     background-color: rgba(105, 90, 165, 0.33);
     /* color: red; */
     /* color: var(--grey-900); */

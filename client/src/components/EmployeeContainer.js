@@ -6,38 +6,31 @@ import Wrapper from "../assets/wrappers/JobsContainer";
 import PageBtnContainer from "./PageBtnContainer";
 
 const EmployeeContainer = () => {
-  const {
-    getEmployee,
-    jobs,
-    isLoading,
-    totalJobs,
-    numOfPages,
-    page,
-    employees,
-  } = useAppContext();
+  const { getEmployee, isLoading, totalJobs, numOfPages, page, employees } =
+    useAppContext();
 
-  let Employeess = [
-    {
-      _id: 0,
+  // let Employeess = [
+  //   {
+  //     _id: 0,
 
-      position: "myPOSITION0",
-      company: "mycompany0",
-      jobLocation: "mylocation0",
-    },
-    {
-      _id: 1,
+  //     position: "myPOSITION0",
+  //     company: "mycompany0",
+  //     jobLocation: "mylocation0",
+  //   },
+  //   {
+  //     _id: 1,
 
-      position: "myPOSITION1",
-      company: "mycompany1",
-      jobLocation: "mylocation1",
-    },
-    {
-      _id: 2,
-      position: "myPOSITION2",
-      company: "mycompany2",
-      jobLocation: "mylocation2",
-    },
-  ];
+  //     position: "myPOSITION1",
+  //     company: "mycompany1",
+  //     jobLocation: "mylocation1",
+  //   },
+  //   {
+  //     _id: 2,
+  //     position: "myPOSITION2",
+  //     company: "mycompany2",
+  //     jobLocation: "mylocation2",
+  //   },
+  // ];
   useEffect(() => {
     getEmployee();
     // eslint-disable-next-line

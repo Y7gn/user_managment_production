@@ -21,10 +21,12 @@ import {
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
   SET_EDIT_JOB,
-  DELETE_JOB_BEGIN,
+  SET_EDIT_CUSTOMER,
+  DELETE_CUSTOMER_BEGIN,
   EDIT_JOB_BEGIN,
   EDIT_JOB_SUCCESS,
   EDIT_JOB_ERROR,
+  EDIT_CUSTOMER_SUCCESS,
   SHOW_STATS_BEGIN,
   SHOW_STATS_SUCCESS,
   CLEAR_FILTERS,
@@ -32,6 +34,8 @@ import {
   GET_CURRENT_USER_BEGIN,
   GET_CURRENT_USER_SUCCESS,
   GET_EMPLOYEE_SUCCESS,
+  GET_CUSTOMER_SUCCESS,
+  GET_MY_CUSTOMER_SUCCESS,
 } from "./actions";
 import axios from "axios";
 
@@ -52,30 +56,50 @@ const initialState = {
   // userLocation: userLocation || '',
   showSideBar: false,
   isEditing: false,
+  isEditingCustomer: false,
   editEmployeeId: "",
-  // position: "",
-  // company: "",
-  // jobLocation: "",
-  // jobLocation:userLocation || '',
-  // jobTypeOptions: ["full-time", "part-time", "remote", "internship"],
-  // jobType: "full-time",
-
-  customerstatus: "interview",
-  customerstatusOptions: ["interview", "declined", "pending"],
+  editCustomerId: "",
 
   customername: "",
   phonenumber: "",
-  companypercentage: "قيد الانتظار",
-  companypercentageOptions: ["قيد الانتظار"],
+
+  customerstatusOptions: [
+    "عميل تم الانجاز",
+    "الحسبة قيد الانتظار",
+    "عميل متردد",
+    "عميل لم يوافق",
+  ],
+  companypercentageOptions: ["قيد الانتظار", "other"],
+  excesscashcustomerOptions: ["قيد الانتظار", "other"],
+  supportedornotOptions: ["مدعوم", "غير مدعوم", "other"],
+  salarybankOptions: ["الاهلي", "الفرنسي", "الراجحي", "other"],
+  financebankOptions: ["الاهلي", "الفرنسي", "الراجحي", "other"],
+  obligationsOptions: [
+    "امكان",
+    "بنك التسليف",
+    "بنك التنمية",
+    "سيارة",
+    "شركة اليسر",
+    "نايفات",
+  ],
+  buildingPlaceOptions: ["قيد الانتظار", "نجران", "القويقعه", "تربه", "other"],
+
+  customerstatus: "الحسبة قيد الانتظار",
+
+  companypercentage: "",
+  companypercentageOptionsInput: "",
 
   excesscashcustomer: "قيد الانتظار",
-  excesscashcustomerOptions: ["قيد الانتظار"],
+  excesscashcustomerOptionsInput: "",
+
   supportedornot: "مدعوم",
-  supportedornotOptions: ["مدعوم", "غير مدعوم"],
+  supportedornotOptionsInput: "",
+
   salarybank: "الاهلي",
-  salarybankOptions: ["الاهلي", "الفرنسي", "الراجحي"],
+  salarybankOptionsInput: "",
+
   financebank: "الاهلي",
-  financebankOptions: ["الاهلي", "الفرنسي", "الراجحي"],
+  financebankOptionsInput: "",
 
   obligations: {
     personalloan: false,
@@ -86,31 +110,26 @@ const initialState = {
     nayifat: false,
     other: "",
   },
-  obligationsOptions: [
-    "امكان",
-    "بنك التسليف",
-    "بنك التنمية",
-    "سيارة",
-    "شركة اليسر",
-    "نايفات",
-  ],
   buildingPlace: "",
-  buildingPlaceOptions: ["قيد الانتظار", "نجران", "القويقعه", "تربه"],
+  buildingPlaceOptionsInput: "",
 
-  jobs: [],
   employees: [],
+  customers: [],
   totalJobs: 0,
+  mycustomers: [],
+  // totalCustomers: 0,
   numOfPages: 1,
   page: 1,
   stats: {},
   monthlyApplications: [],
 
   //search
-  search: "",
-  searchStatus: "all",
-  searchType: "all",
+  searchname: "",
+  searchphoneNumber: "",
+  searchCustomerStatus: "الجميع",
   sort: "latest",
-  sortOptions: ["latest", "oldest", "a-z", "z-a"],
+  // sortOptions: ["latest", "oldest", "a-z", "z-a"],
+  sortOptionsAr: ["الاحدث", "الاقدم", "أ-ي", "ي-أ"],
 
   //permissions
   permissions: "",
@@ -271,6 +290,190 @@ const AppProvider = ({ children }) => {
     }
   };
 
+  const createCustomer = async () => {
+    dispatch({ type: CREATE_JOB_BEGIN });
+
+    try {
+      const {
+        customername,
+        phonenumber,
+
+        customerstatus,
+
+        companypercentage,
+        companypercentageOptionsInput,
+
+        excesscashcustomer,
+        excesscashcustomerOptionsInput,
+
+        supportedornot,
+        supportedornotOptionsInput,
+
+        salarybank,
+        salarybankOptionsInput,
+
+        financebank,
+        financebankOptionsInput,
+
+        obligations,
+
+        buildingPlace,
+        buildingPlaceOptionsInput,
+      } = state;
+      let companypercentageResult,
+        excesscashcustomerResult,
+        customerstatusResult,
+        supportedornotResult,
+        salarybankResult,
+        financebankResult,
+        buildingPlaceResult;
+      if (customerstatus === "other") {
+        companypercentageResult = companypercentageOptionsInput;
+      } else {
+        companypercentageResult = customerstatus;
+      }
+
+      if (excesscashcustomer === "other") {
+        excesscashcustomerResult = excesscashcustomerOptionsInput;
+      } else {
+        excesscashcustomerResult = excesscashcustomer;
+      }
+      if (companypercentage === "other") {
+        customerstatusResult = companypercentageOptionsInput;
+      } else {
+        customerstatusResult = companypercentage;
+      }
+      if (supportedornot === "other") {
+        supportedornotResult = supportedornotOptionsInput;
+      } else {
+        supportedornotResult = supportedornot;
+      }
+      if (salarybank === "other") {
+        salarybankResult = salarybankOptionsInput;
+      } else {
+        salarybankResult = salarybank;
+      }
+      if (financebank === "other") {
+        financebankResult = financebankOptionsInput;
+      } else {
+        financebankResult = financebank;
+      }
+      if (buildingPlace === "other") {
+        buildingPlaceResult = buildingPlaceOptionsInput;
+      } else {
+        buildingPlaceResult = buildingPlace;
+      }
+
+      await authFetch.post("/customer", {
+        customername,
+        customerstatus: customerstatusResult,
+        phonenumber,
+        companypercentage: companypercentageResult,
+        excesscashcustomer: excesscashcustomerResult,
+        supportedornot: supportedornotResult,
+        salarybank: salarybankResult,
+        financebank: financebankResult,
+        obligations: obligations,
+        buildingPlace: buildingPlaceResult,
+      });
+      dispatch({ type: CREATE_JOB_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: CREATE_JOB_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+  };
+  const editCustomer = async () => {
+    dispatch({ type: EDIT_JOB_BEGIN });
+    try {
+      const {
+        customername,
+        phonenumber,
+
+        customerstatus,
+
+        companypercentage,
+        companypercentageOptionsInput,
+
+        excesscashcustomer,
+        excesscashcustomerOptionsInput,
+
+        supportedornot,
+        supportedornotOptionsInput,
+
+        salarybank,
+        salarybankOptionsInput,
+
+        financebank,
+        financebankOptionsInput,
+
+        obligations,
+
+        buildingPlace,
+        buildingPlaceOptionsInput,
+      } = state;
+      let companypercentageResult,
+        excesscashcustomerResult,
+        supportedornotResult,
+        salarybankResult,
+        financebankResult,
+        buildingPlaceResult;
+
+      if (excesscashcustomer === "other") {
+        excesscashcustomerResult = excesscashcustomerOptionsInput;
+      } else {
+        excesscashcustomerResult = excesscashcustomer;
+      }
+      if (companypercentage === "other") {
+        companypercentageResult = companypercentageOptionsInput;
+      } else {
+        companypercentageResult = companypercentage;
+      }
+      if (supportedornot === "other") {
+        supportedornotResult = supportedornotOptionsInput;
+      } else {
+        supportedornotResult = supportedornot;
+      }
+      if (salarybank === "other") {
+        salarybankResult = salarybankOptionsInput;
+      } else {
+        salarybankResult = salarybank;
+      }
+      if (financebank === "other") {
+        financebankResult = financebankOptionsInput;
+      } else {
+        financebankResult = financebank;
+      }
+      if (buildingPlace === "other") {
+        buildingPlaceResult = buildingPlaceOptionsInput;
+      } else {
+        buildingPlaceResult = buildingPlace;
+      }
+      await authFetch.patch(`/customer/${state.editCustomerId}`, {
+        customername,
+        customerstatus,
+        phonenumber,
+        companypercentage: companypercentageResult,
+        excesscashcustomer: excesscashcustomerResult,
+        supportedornot: supportedornotResult,
+        salarybank: salarybankResult,
+        financebank: financebankResult,
+        obligations: obligations,
+        buildingPlace: buildingPlaceResult,
+      });
+      dispatch({ type: EDIT_CUSTOMER_SUCCESS });
+      dispatch({ type: CLEAR_VALUES });
+    } catch (error) {
+      if (error.response.status === 401) return;
+      dispatch({
+        type: EDIT_JOB_ERROR,
+        payload: { msg: error.response.data.msg },
+      });
+    }
+  };
   const handleChange = ({ name, value }) => {
     dispatch({ type: "HANDLE_CHANGE", payload: { name, value } });
   };
@@ -285,7 +488,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CLEAR_VALUES });
   };
 
-  const createJob = async () => {
+  const createEmployee = async () => {
     dispatch({ type: CREATE_JOB_BEGIN });
     try {
       const {
@@ -322,17 +525,23 @@ const AppProvider = ({ children }) => {
   };
 
   const getJobs = async () => {
-    const { page, search, searchStatus, searchType, sort } = state;
+    const { page, search, searchCustomerStatus, searchType, sort } = state;
     // console.log(search, searchStatus, searchType, sort);
-
-    let url = `/jobs?page=${page}status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
-    if (search) {
-      url = url + `&search=${search}`;
-    }
+    // if (searchCustomerStatus === "الجميع") {
+    //   searchStatus = "all";
+    // } else if (searchCustomerStatus === "عميل تم الانجاز") {
+    //   searchStatus = "all";
+    // }
+    let url = `/customer?customerstatus=${searchCustomerStatus}`;
+    // let url = `/customer?page=${page}customerstatus=${searchCustomerStatus}&jobType=${searchType}&sort=${sort}`;
+    // if (search) {
+    //   url = url + `&search=${search}`;
+    // }
 
     dispatch({ type: GET_JOBS_BEGIN });
     try {
       const { data } = await authFetch(url);
+      console.log(data);
       const { jobs, totalJobs, numOfPages } = data;
       dispatch({
         type: GET_JOBS_SUCCESS,
@@ -364,12 +573,80 @@ const AppProvider = ({ children }) => {
     }
     clearAlert();
   };
-
+  const getCustomers = async () => {
+    const {
+      page,
+      search,
+      searchCustomerStatus,
+      searchname,
+      searchphoneNumber,
+      sort,
+    } = state;
+    console.log(searchCustomerStatus);
+    let url = `/customer?customerstatus=${searchCustomerStatus}&searchname=${searchname}&phoneNumber=${searchphoneNumber}&sort=${sort}`;
+    dispatch({ type: GET_JOBS_BEGIN });
+    console.log(url);
+    try {
+      const { data } = await authFetch(url);
+      const { customers } = data;
+      dispatch({
+        type: GET_CUSTOMER_SUCCESS,
+        payload: { customers },
+      });
+    } catch (error) {
+      // console.log(error);
+      //   logoutUser();
+    }
+    clearAlert();
+  };
+  const getMyCustomers = async () => {
+    dispatch({ type: GET_JOBS_BEGIN });
+    try {
+      const { data } = await authFetch(`/auth/getSingleUserCustomers`);
+      const { mycustomers } = data;
+      dispatch({
+        type: GET_MY_CUSTOMER_SUCCESS,
+        payload: { mycustomers },
+      });
+    } catch (error) {
+      // console.log(error);
+      //   logoutUser();
+    }
+    clearAlert();
+  };
   const setEditEmployee = (id) => {
     // console.log(`set edit employee ${id}`);
     dispatch({ type: SET_EDIT_JOB, payload: { id } });
   };
 
+  const setEditCustomer = (id) => {
+    // console.log(`set edit employee ${id}`);
+    dispatch({ type: SET_EDIT_CUSTOMER, payload: { id } });
+    console.log("out");
+    console.log(state.companypercentage);
+  };
+  const deleteCustomer = async (id) => {
+    // console.log(`set edit employee ${id}`);
+    dispatch({ type: DELETE_CUSTOMER_BEGIN });
+    try {
+      await authFetch.delete(`/customer/${id}`);
+      getCustomers();
+    } catch (error) {
+      console.log(error.response);
+      // logoutUser();
+    }
+  };
+  //  const deleteJob = async (jobId) => {
+  //     dispatch({ type: DELETE_JOB_BEGIN });
+  //     try {
+  //       await authFetch.delete(`/jobs/${jobId}`);
+  //       getJobs();
+  //     } catch (error) {
+  //       // console.log(error.response);
+  //       logoutUser();
+  //     }
+  //     // console.log(`set edit job ${id}`);
+  //   };
   const editEmployee = async () => {
     dispatch({ type: EDIT_JOB_BEGIN });
     try {
@@ -412,22 +689,23 @@ const AppProvider = ({ children }) => {
       });
     }
   };
-  const deleteJob = async (jobId) => {
-    dispatch({ type: DELETE_JOB_BEGIN });
-    try {
-      await authFetch.delete(`/jobs/${jobId}`);
-      getJobs();
-    } catch (error) {
-      // console.log(error.response);
-      logoutUser();
-    }
-    // console.log(`set edit job ${id}`);
-  };
+  // const deleteJob = async (jobId) => {
+  //   dispatch({ type: DELETE_JOB_BEGIN });
+  //   try {
+  //     await authFetch.delete(`/jobs/${jobId}`);
+  //     getJobs();
+  //   } catch (error) {
+  //     // console.log(error.response);
+  //     logoutUser();
+  //   }
+  //   // console.log(`set edit job ${id}`);
+  // };
   const showStats = async () => {
     dispatch({ type: SHOW_STATS_BEGIN });
     try {
       //by default authFetch will be get request if not specified
-      const { data } = await authFetch("/jobs/stats");
+      const { data } = await authFetch("/customer/stats");
+      console.log(data);
       dispatch({
         type: SHOW_STATS_SUCCESS,
         payload: {
@@ -436,8 +714,8 @@ const AppProvider = ({ children }) => {
         },
       });
     } catch (error) {
-      // console.log(error.response);
-      logoutUser();
+      console.log(error.response);
+      // logoutUser();
     }
   };
 
@@ -476,10 +754,10 @@ const AppProvider = ({ children }) => {
         updateUser,
         handleChange,
         clearValues,
-        createJob,
+        createEmployee,
+        createCustomer,
         getJobs,
         setEditEmployee,
-        deleteJob,
         editEmployee,
         showStats,
         clearFilters,
@@ -488,6 +766,11 @@ const AppProvider = ({ children }) => {
         getEmployee,
         handleChange1,
         handleChange2,
+        editCustomer,
+        setEditCustomer,
+        deleteCustomer,
+        getCustomers,
+        getMyCustomers,
       }}
     >
       {children}

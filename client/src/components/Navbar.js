@@ -25,7 +25,6 @@ export const Navbar = () => {
           >
             <FaUserCircle />
             {user?.name}
-            {/* if user exist grap name */}
             <FaCaretDown />
           </button>
 

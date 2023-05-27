@@ -1,12 +1,12 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const Wrapper = styled.section`
   .dashboard {
     display: grid;
     grid-template-columns: 1fr;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
-  .dashboard-page {
+  .dashboard-pages {
     width: 90vw;
     margin: 0 auto;
     padding: 2rem 0;
@@ -15,9 +15,9 @@ const Wrapper = styled.section`
     .dashboard {
       grid-template-columns: auto 1fr;
     }
-    .dashboard-page {
+    .dashboard-pages {
       width: 90%;
     }
   }
-`
-export default Wrapper
+`;
+export default Wrapper;

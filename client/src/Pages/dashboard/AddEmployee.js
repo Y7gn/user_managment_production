@@ -27,7 +27,7 @@ const AddEmployee = () => {
     // statusOptions,
     handleChange,
     clearValues,
-    createJob,
+    createEmployee,
     editEmployee,
   } = useAppContext();
 
@@ -43,7 +43,7 @@ const AddEmployee = () => {
       return;
     }
 
-    createJob();
+    createEmployee();
     clearValues();
     // console.log('create job');
   };

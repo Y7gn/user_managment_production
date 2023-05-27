@@ -1,5 +1,10 @@
 {
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.12.2",
+    "@reduxjs/toolkit": "^1.9.5",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -15,6 +20,7 @@
     "moment": "^2.29.4",
     "mongoose": "^6.9.0",
     "morgan": "^1.10.0",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.7.0",
     "validator": "^13.7.0",
     "xss-clean": "^0.1.1"
@@ -33,8 +39,8 @@
     "server": "nodemon server --ignore client",
     "client": "npm start --prefix client",
     "start": "concurrently --kill-others-on-fail \"npm run server\" \" npm run client\"",
-    "setup-production":"npm run install-client && npm run build-client && npm install",
-    "install-client":"cd client && npm install"
+    "setup-production": "npm run install-client && npm run build-client && npm install",
+    "install-client": "cd client && npm install"
   },
   "keywords": [],
   "author": "",

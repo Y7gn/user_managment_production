@@ -8,7 +8,7 @@ import BigSideBar from "./BigSideBar";
 import SmallSideBar from "./SmallSideBar";
 import FormRowSelect from "./FormRowSelect";
 import SearchContainer from "./SearchContainer";
-import JobsContainer from "./JobsContainer";
+import CustomersContainer from "./CustomersContainer";
 import StatsContainer from "./StatsContainer";
 import ChartsContainer from "./ChartsContainer";
 
@@ -18,6 +18,7 @@ import ChartsContainer from "./ChartsContainer";
 import EmployeeContainer from "./EmployeeContainer";
 import Employee from "./Employee";
 import checkBoxOptions from "./checkBoxOptions";
+import MyCustomersContainer from "./MyCustomersContainer";
 
 export {
   // Logo,
@@ -28,11 +29,12 @@ export {
   SmallSideBar,
   FormRowSelect,
   SearchContainer,
-  JobsContainer,
+  CustomersContainer,
   StatsContainer,
   ChartsContainer,
   Loading,
   EmployeeContainer,
   Employee,
   checkBoxOptions,
+  MyCustomersContainer,
 };

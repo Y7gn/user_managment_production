@@ -20,6 +20,12 @@ const Wrapper = styled.section`
   .form-row {
     margin-bottom: 0;
   }
+  .marginRow {
+    margin-top: 1.5rem;
+  }
+  .formRowCheckbox {
+    display: flex;
+  }
   .form-center {
     /* display: grid; */
     /* row-gap: 0.5rem; */
@@ -37,11 +43,11 @@ const Wrapper = styled.section`
   //check
   .containerchecks {
     display: inline-flex;
-    align-items: center;
     margin-right: 20px;
     cursor: pointer;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     user-select: none;
+    align-items: end;
   }
   /* Style for the checkbox */
   .containerchecks input {
@@ -60,8 +66,8 @@ const Wrapper = styled.section`
   .checkmark {
     position: relative;
     display: inline-block;
-    height: 2.5rem;
-    width: 2.5rem;
+    height: 1.8rem;
+    width: 1.8rem;
     background-color: #eee;
     margin-left: 1rem;
   }
@@ -106,6 +112,9 @@ const Wrapper = styled.section`
       height: 35px;
     }
   } */
+  .form-input-extra {
+    height: 1.8rem;
+  }
   .btn-container {
     margin-top: 2rem;
     width: 100%;
@@ -119,8 +128,8 @@ const Wrapper = styled.section`
     width: 15%;
     margin-left: 1rem;
     /* background-color: rgba(17, 101, 20, 0.76); */
-    background: var(--backgroundColor);
-    color: black;
+    background: var(--green-dark);
+    color: white;
   }
   .choosebtn {
     width: 15%;
@@ -136,7 +145,7 @@ const Wrapper = styled.section`
   .clear-btn {
     width: 15%;
     margin-left: 1rem;
-    background-color: rgba(248, 215, 218, 1);
+    background-color: var(--red-dark);
   }
   .addfirstdiv {
     width: 100%;

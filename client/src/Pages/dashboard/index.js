@@ -6,6 +6,7 @@ import AllCustomer from "./AllCustomer";
 import AllEmployee from "./AllEmployee";
 import AddCustomer from "./AddCustomer";
 import AddEmployee from "./AddEmployee";
+import MyCustomers from "./MyCustomers";
 
 export {
   AllJobs,
@@ -16,4 +17,5 @@ export {
   AddEmployee,
   AllCustomer,
   AllEmployee,
+  MyCustomers,
 };

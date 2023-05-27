@@ -9,6 +9,7 @@ import {
   AllCustomer,
   AddCustomer,
   AddEmployee,
+  MyCustomers,
 } from "./Pages/dashboard";
 
 // const Button = styled.button`
@@ -35,11 +36,12 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Stats />} />
+          <Route index path="/" element={<Stats />} />
           <Route path="/add-employee" element={<AddEmployee />} />
           <Route path="/all-employee" element={<AllEmployee />} />
           <Route path="/add-customer" element={<AddCustomer />} />
           <Route path="/all-customers" element={<AllCustomer />} />
+          <Route path="/emp-customers" element={<MyCustomers />} />
           <Route path="/profile" element={<Profile />} />
         </Route>
         <Route path="/register" element={<Register />} />

@@ -22,7 +22,8 @@ import {
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
   SET_EDIT_JOB,
-  DELETE_JOB_BEGIN,
+  SET_EDIT_CUSTOMER,
+  DELETE_CUSTOMER_BEGIN,
   EDIT_JOB_BEGIN,
   EDIT_JOB_SUCCESS,
   EDIT_JOB_ERROR,
@@ -34,6 +35,9 @@ import {
   GET_CURRENT_USER_SUCCESS,
   GET_EMPLOYEE_SUCCESS,
   HANDLE_CHANGE1,
+  GET_CUSTOMER_SUCCESS,
+  EDIT_CUSTOMER_SUCCESS,
+  GET_MY_CUSTOMER_SUCCESS,
 } from "./actions";
 import { initialState } from "./appContext";
 
@@ -236,6 +240,26 @@ const reducer = (state, action) => {
       isLoading: false,
     };
   }
+  if (action.type === GET_CUSTOMER_SUCCESS) {
+    return {
+      ...state,
+      customers: action.payload.customers,
+      //   jobs: action.payload.jobs,
+      //   totalJobs: action.payload.totalJobs,
+      //   numOfPages: action.payload.numOfPages,
+      isLoading: false,
+    };
+  }
+  if (action.type === GET_MY_CUSTOMER_SUCCESS) {
+    return {
+      ...state,
+      mycustomers: action.payload.mycustomers,
+      //   jobs: action.payload.jobs,
+      //   totalJobs: action.payload.totalJobs,
+      //   numOfPages: action.payload.numOfPages,
+      isLoading: false,
+    };
+  }
   if (action.type === SET_EDIT_JOB) {
     const employees = state.employees.find(
       (employee) => employee._id === action.payload.id
@@ -259,7 +283,106 @@ const reducer = (state, action) => {
       // status,
     };
   }
-  if (action.type === DELETE_JOB_BEGIN) {
+  if (action.type === SET_EDIT_CUSTOMER) {
+    const customers = state.customers.find(
+      (customer) => customer._id === action.payload.id
+    );
+    const {
+      _id,
+      customername,
+      phonenumber,
+      customerstatus,
+      companypercentage,
+      excesscashcustomer,
+      supportedornot,
+      salarybank,
+      financebank,
+      obligations,
+      buildingPlace,
+    } = customers;
+    console.log(obligations);
+
+    let companypercentageOptionsInput;
+    let excesscashcustomerOptionsInput;
+    let supportedornotOptionsInput;
+    let salarybankOptionsInput;
+    let financebankOptionsInput;
+    let buildingPlaceOptionsInput;
+
+    let companypercentageEdited;
+    let excesscashcustomerEdited;
+    let supportedornotEdited;
+    let salarybankEdited;
+    let financebankEdited;
+    let buildingPlaceEdited;
+    if (!state.companypercentageOptions.includes(companypercentage)) {
+      console.log("before");
+      console.log(state.companypercentage);
+      companypercentageOptionsInput = companypercentage;
+      companypercentageEdited = "other";
+      console.log("after");
+      console.log(state.companypercentage);
+    }
+    if (!state.excesscashcustomerOptions.includes(excesscashcustomer)) {
+      excesscashcustomerEdited = "other";
+
+      excesscashcustomerOptionsInput = excesscashcustomer;
+    }
+    if (!state.supportedornotOptions.includes(supportedornot)) {
+      supportedornotEdited = "other";
+
+      supportedornotOptionsInput = supportedornot;
+    }
+    if (!state.salarybankOptions.includes(salarybank)) {
+      salarybankEdited = "other";
+
+      salarybankOptionsInput = salarybank;
+    }
+    if (!state.financebankOptions.includes(financebank)) {
+      financebankEdited = "other";
+
+      financebankOptionsInput = financebank;
+    }
+    if (!state.buildingPlaceOptions.includes(buildingPlace)) {
+      buildingPlaceEdited = "other";
+
+      buildingPlaceOptionsInput = buildingPlace;
+    }
+    return {
+      ...state,
+      isEditingCustomer: true,
+      editCustomerId: _id,
+      customername,
+      phonenumber,
+
+      customerstatus,
+
+      companypercentage: companypercentageEdited,
+      companypercentageOptionsInput,
+
+      excesscashcustomer: excesscashcustomerEdited,
+      excesscashcustomerOptionsInput,
+
+      supportedornot: supportedornotEdited,
+      supportedornotOptionsInput,
+
+      salarybank: salarybankEdited,
+      salarybankOptionsInput,
+
+      financebank: financebankEdited,
+      financebankOptionsInput,
+
+      obligations,
+
+      buildingPlace: buildingPlaceEdited,
+      buildingPlaceOptionsInput,
+      // position,
+      // jobLocation,
+      // jobType,
+      // status,
+    };
+  }
+  if (action.type === DELETE_CUSTOMER_BEGIN) {
     return {
       ...state,
       isLoading: true,
@@ -279,6 +402,15 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       alertText: "تم تحديث الموظف!",
+    };
+  }
+  if (action.type === EDIT_CUSTOMER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: "success",
+      alertText: "تم تحديث العميل!",
     };
   }
   if (action.type === EDIT_JOB_ERROR) {

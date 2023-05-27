@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import { useAppContext } from "../context/appContext";
-
 const FormRowSelect = ({
   labelText,
   name,
@@ -8,21 +5,16 @@ const FormRowSelect = ({
   handleChange,
   list,
   optionsIsActivated,
+  optionInputName,
+  optionInputValue,
 }) => {
-  const [inputValue, setInputValue] = useState(""); // new state variable
-  var newList = [...list, "other"];
-
-  const { handleChange2 } = useAppContext();
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-    console.log(inputValue);
-    console.log(inputValue);
-    console.log(e.target.value);
-    handleChange2({ name, value: inputValue });
-  };
+  // const handleInputChange = () => {
+  //   console.log(optionInputName);
+  //   console.log(optionInputValue);
+  //   handleChange({ name: optionInputName, value: optionInputValue });
+  // };
   return (
-    <div className="formRow">
+    <div className="marginRow elementRow formRow">
       <label htmlFor={name} className="form-label">
         {labelText || name}
       </label>
@@ -34,7 +26,7 @@ const FormRowSelect = ({
         className="form-select choosebtn"
         style={{ color: "black" }}
       >
-        {newList.map((itemValue, index) => {
+        {list.map((itemValue, index) => {
           return (
             <option key={index} value={itemValue}>
               {itemValue}
@@ -43,13 +35,13 @@ const FormRowSelect = ({
         })}
       </select>
 
-      {optionsIsActivated && !list.includes(value) && (
+      {optionsIsActivated && (
         <>
           <input
             type="text"
-            value={inputValue}
-            name={name}
-            onChange={handleInputChange}
+            value={optionInputValue}
+            name={optionInputName}
+            onChange={handleChange}
             className="form-input other-input"
           />
         </>

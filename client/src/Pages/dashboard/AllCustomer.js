@@ -1,10 +1,10 @@
-import { JobsContainer, SearchContainer } from "../../components";
+import { CustomersContainer, SearchContainer } from "../../components";
 
 const AllCustomer = () => {
   return (
     <>
       <SearchContainer />
-      <JobsContainer />
+      <CustomersContainer />
     </>
   );
 };

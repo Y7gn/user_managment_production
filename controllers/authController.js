@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Customer from "../models/Customer.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, UnAuthenticatedError } from "../errors/index.js";
 import attachCookie from "../utils/attachCookies.js";
@@ -105,6 +106,10 @@ const getCurrentUser = async (req, res) => {
   const user = await User.findOne({ _id: req.user.userId });
   res.status(StatusCodes.OK).json({ user });
 };
+const getSingleUserCustomers = async (req, res) => {
+  const mycustomers = await Customer.find({ createdBy: req.user.userId });
+  res.status(StatusCodes.OK).json({ mycustomers });
+};
 const logoutUser = async (req, res) => {
   res.cookie("token", "logout", {
     httpOnly: true,
@@ -158,4 +163,5 @@ export {
   logoutUser,
   allUsers,
   updateUserInformation,
+  getSingleUserCustomers,
 };

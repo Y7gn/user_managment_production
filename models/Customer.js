@@ -20,6 +20,12 @@ const CustomerSchema = new mongoose.Schema(
     },
     customerstatus: {
       type: String,
+      enum: [
+        "عميل تم الانجاز",
+        "الحسبة قيد الانتظار",
+        "عميل متردد",
+        "عميل لم يوافق",
+      ],
       // enum: ["done", "waiting", "refused", "unsure"],
       // default: "waiting customer",
     },
@@ -36,7 +42,14 @@ const CustomerSchema = new mongoose.Schema(
       // enum: ["one", "two", "three", "four"],
     },
     obligations: {
-      type: String,
+      car: false,
+      creditbank: false,
+      developmentbank: false,
+      nayifat: false,
+      personalloan: false,
+      yusrcompany: false,
+      other: "",
+
       // enum: [
       //   "امكان",
       //   "بنك التسليف",
@@ -50,11 +63,16 @@ const CustomerSchema = new mongoose.Schema(
       type: String,
       // enum: ["نجران", "القويقعه", "تربه"],
     },
-    CompanyPercentage: {
-      type: String,
-      // enum: ["done", "wgaiting", "refused", "unsure"],
-      // default: "waiting customer",
-    },
+    // CompanyPercentage: {
+    //   type: String,
+    //   enum: [
+    //     "عميل تم الانجاز",
+    //     "الحسبة قيد الانتظار",
+    //     "عميل متردد",
+    //     "عميل لم يوافق",
+    //   ],
+    //   default: "الحسبة قيد الانتظار",
+    // },
 
     // position: {
     //   type: String,

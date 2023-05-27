@@ -1,6 +1,8 @@
 export const FormRow = ({ type, name, value, handleChange, labelText }) => {
+  const isTel = type === "tel";
+  const pattern = isTel ? "[0-9]{3}-[0-9]{3}-[0-9]{4}" : undefined;
   return (
-    <div className="form-now">
+    <div className="marginRow form-now">
       <label htmlFor={name} className="form-label">
         {labelText || name}
       </label>
@@ -9,7 +11,8 @@ export const FormRow = ({ type, name, value, handleChange, labelText }) => {
         value={value}
         name={name}
         onChange={handleChange}
-        className="form-input"
+        pattern={pattern}
+        className="form-input form-input-extra"
       />
     </div>
   );

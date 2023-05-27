@@ -10,31 +10,32 @@ const links = [
 
     path: "/",
     icon: <IoBarChartSharp />,
+    menuItems: ["لوحة التحكم"],
   },
   {
     id: 2,
     text: "الموظفين",
     // path: "all-jobs",
-    path: ["add-employee", "all-employee", "cc"],
+    path: ["add-employee", "all-employee"],
 
     icon: <MdQueryStats />,
     menuItems: [
       "اضافة موظفين جديد",
       // "أدوار الموظفين",
       "جميع الموظفين",
-      "الموظف المثالي",
+      // "الموظف المثالي",
     ],
   },
   {
     id: 3,
     text: "العملاء",
     // path: "add-job",
-    path: ["add-customer", "ee", "ee", "cc", "all-customers"],
+    path: ["add-customer", "emp-customers", "all-customers"],
     icon: <FaWpforms />,
     menuItems: [
       "انشاء عميل جديد",
-      "ارسال عميل",
-      "الحسابات المنتظرة",
+      // "ارسال عميل",
+      // "الحسابات المنتظرة",
       "عملائي",
       "جميع العملاء",
     ],

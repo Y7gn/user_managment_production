@@ -7,21 +7,21 @@ const SearchContainer = () => {
   const [localSearch, setLocalSearch] = useState("");
   const {
     isLoading,
-    search,
-    searchStatus,
-    searchType,
     sort,
-    sortOptions,
+    searchCustomerStatus,
+    searchname,
+    searchphoneNumber,
+    sortOptionsAr,
+    customerstatusOptions,
     handleChange,
     clearFilters,
-    jobTypeOptions,
-    statusOptions,
   } = useAppContext();
 
   const handleSearch = (e) => {
     if (isLoading) return;
+    console.log(e.target.name);
+    console.log(e.target.value);
     handleChange({ name: e.target.name, value: e.target.value });
-    // console.log(e.target.name);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,38 +45,41 @@ const SearchContainer = () => {
   return (
     <Wrapper>
       <form className="form">
-        <h4>Search Form</h4>
+        <h4>جدول البحث:</h4>
         <div className="form-center">
           {/* search position */}
           <FormRow
             type="text"
-            name="search"
-            value={search}
+            name="searchname"
+            labelText={"الاسم:"}
+            value={searchname}
             handleChange={handleSearch}
+
+            // handleChange={optimizedDebounce}
+          />
+          <FormRow
+            type="tel"
+            name="searchphoneNumber"
+            labelText={"رقم الهاتف:"}
+            value={searchphoneNumber}
+            handleChange={handleSearch}
+            // handleChange={optimizedDebounce}
           />
           {/* search by status */}
           <FormRowSelect
-            labelText="status"
-            name="searchStatus"
-            value={localSearch}
-            handleChange={optimizedDebounce}
-            // handleChange={handleSearch}
-            list={["all", ...statusOptions]}
-          />
-          {/* search by type */}
-          <FormRowSelect
-            labelText="type"
-            name="searchType"
-            value={searchType}
+            labelText="حالة الطلب:"
+            name="searchCustomerStatus"
+            value={searchCustomerStatus}
             handleChange={handleSearch}
-            list={["all", ...jobTypeOptions]}
+            list={["الجميع", ...customerstatusOptions]}
           />
-          {/* search by sort */}
+
           <FormRowSelect
             name="sort"
+            labelText="الترتيب:"
             value={sort}
             handleChange={handleSearch}
-            list={sortOptions}
+            list={sortOptionsAr}
           />
           <button
             className="btn btn-block btn-danger"

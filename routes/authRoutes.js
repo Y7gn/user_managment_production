@@ -10,6 +10,7 @@ import {
   logoutUser,
   allUsers,
   updateUserInformation,
+  getSingleUserCustomers,
 } from "../controllers/authController.js";
 import authenticateUser from "../middleware/auth.js";
 
@@ -27,6 +28,9 @@ router.route("/login").post(login);
 router.route("/updateUser").patch(authenticateUser, updateUser);
 router.route("/:id").patch(authenticateUser, updateUserInformation);
 router.route("/allUsers").get(authenticateUser, allUsers);
+router
+  .route("/getSingleUserCustomers")
+  .get(authenticateUser, getSingleUserCustomers);
 router.route("/getCurrentUser").get(authenticateUser, getCurrentUser);
 router.get("/logout", logoutUser);
 

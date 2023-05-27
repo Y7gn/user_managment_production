@@ -31,6 +31,9 @@ const Wrapper = styled.article`
     margin-right: 2rem;
   }
   .info {
+    margin-right: 1rem;
+    display: flex;
+    justify-content: space-between;
     h5 {
       margin-bottom: 0.25rem;
     }
@@ -101,7 +104,9 @@ const Wrapper = styled.article`
     letter-spacing: var(--letterSpacing);
     text-align: center;
     width: 100px;
-    height: 30px;
+    /* height: 30px; */
+    margin-top: 1rem;
+    width: 151px;
   }
   footer {
     margin-top: 1rem;
@@ -119,14 +124,19 @@ const Wrapper = styled.article`
     height: 30px;
   }
   .employeeedit-btn {
-    color: var(--green-dark);
-    background: var(--green-light);
+    color: white;
+    background: var(--green-dark);
     /* margin-right: 0.5rem; */
+
     margin-left: 2rem;
   }
   .employeedelete-btn {
-    color: var(--red-dark);
-    background: var(--red-light);
+    color: white;
+    background: var(--red-dark);
+  }
+  .actions {
+    display: flex;
+    align-items: center;
   }
   &:hover .actions,
   .actionsEmployee {

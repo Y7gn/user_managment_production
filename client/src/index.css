@@ -43,7 +43,7 @@ html {
   --red-light: #f8d7da;
   --red-dark: #842029;
   --green-light: #d1e7dd;
-  --green-dark: #0f5132;
+  --green-dark: rgba(17, 113, 15, 0.68);
 
   /* fonts  */
   /* --headingFont: 'Roboto Condensed', Sans-Serif; */
@@ -81,11 +81,12 @@ body {
   line-height: 1.75;
   color: var(--textColor);
 }
+
 /* body{
   font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 } */
 * {
-  transition: all 0.5s;
+  /* transition: all 0.5s; */
 }
 p {
   margin-bottom: 1.5rem;
