@@ -328,9 +328,9 @@ const AppProvider = ({ children }) => {
         financebankResult,
         buildingPlaceResult;
       if (customerstatus === "other") {
-        companypercentageResult = companypercentageOptionsInput;
+        customerstatusResult = companypercentageOptionsInput;
       } else {
-        companypercentageResult = customerstatus;
+        customerstatusResult = customerstatus;
       }
 
       if (excesscashcustomer === "other") {
@@ -339,9 +339,9 @@ const AppProvider = ({ children }) => {
         excesscashcustomerResult = excesscashcustomer;
       }
       if (companypercentage === "other") {
-        customerstatusResult = companypercentageOptionsInput;
+        companypercentageResult = companypercentageOptionsInput;
       } else {
-        customerstatusResult = companypercentage;
+        companypercentageResult = companypercentage;
       }
       if (supportedornot === "other") {
         supportedornotResult = supportedornotOptionsInput;
@@ -363,7 +363,18 @@ const AppProvider = ({ children }) => {
       } else {
         buildingPlaceResult = buildingPlace;
       }
-
+      console.log(
+        customername,
+        customerstatusResult,
+        phonenumber,
+        companypercentageResult,
+        excesscashcustomerResult,
+        supportedornotResult,
+        salarybankResult,
+        financebankResult,
+        obligations,
+        buildingPlaceResult
+      );
       await authFetch.post("/customer", {
         customername,
         customerstatus: customerstatusResult,
@@ -452,6 +463,7 @@ const AppProvider = ({ children }) => {
       } else {
         buildingPlaceResult = buildingPlace;
       }
+
       await authFetch.patch(`/customer/${state.editCustomerId}`, {
         customername,
         customerstatus,
@@ -589,6 +601,7 @@ const AppProvider = ({ children }) => {
     try {
       const { data } = await authFetch(url);
       const { customers } = data;
+      console.log(customers);
       dispatch({
         type: GET_CUSTOMER_SUCCESS,
         payload: { customers },
@@ -604,13 +617,14 @@ const AppProvider = ({ children }) => {
     try {
       const { data } = await authFetch(`/auth/getSingleUserCustomers`);
       const { mycustomers } = data;
+      // console.log(mycustomers);
       dispatch({
         type: GET_MY_CUSTOMER_SUCCESS,
         payload: { mycustomers },
       });
     } catch (error) {
       // console.log(error);
-      //   logoutUser();
+      logoutUser();
     }
     clearAlert();
   };
@@ -620,20 +634,19 @@ const AppProvider = ({ children }) => {
   };
 
   const setEditCustomer = (id) => {
-    // console.log(`set edit employee ${id}`);
+    console.log(`set edit employee ${id}`);
     dispatch({ type: SET_EDIT_CUSTOMER, payload: { id } });
     console.log("out");
-    console.log(state.companypercentage);
   };
   const deleteCustomer = async (id) => {
     // console.log(`set edit employee ${id}`);
     dispatch({ type: DELETE_CUSTOMER_BEGIN });
     try {
       await authFetch.delete(`/customer/${id}`);
-      getCustomers();
+      getMyCustomers();
     } catch (error) {
       console.log(error.response);
-      // logoutUser();
+      logoutUser();
     }
   };
   //  const deleteJob = async (jobId) => {
@@ -715,7 +728,7 @@ const AppProvider = ({ children }) => {
       });
     } catch (error) {
       console.log(error.response);
-      // logoutUser();
+      logoutUser();
     }
   };
 
@@ -740,6 +753,7 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     getCurrentUser();
+    // getCustomers();
   }, []);
 
   return (

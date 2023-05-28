@@ -277,16 +277,16 @@ const reducer = (state, action) => {
       addCustomerCheckBox: permissions.addCustomer,
       allCustomersCheckBox: permissions.showAllCustomers,
       editDeleteCustomerCheckBox: permissions.editAndDeleteCustomer,
-      // position,
-      // jobLocation,
-      // jobType,
-      // status,
     };
   }
   if (action.type === SET_EDIT_CUSTOMER) {
     const customers = state.customers.find(
       (customer) => customer._id === action.payload.id
     );
+
+    customers == null ??
+      state.mycustomers.find((customer) => customer._id === action.payload.id);
+    console.log(customers);
     const {
       _id,
       customername,

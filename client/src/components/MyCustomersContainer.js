@@ -21,7 +21,6 @@ const MyCustomersContainer = () => {
 
   useEffect(() => {
     getMyCustomers();
-    // eslint-disable-next-line
   }, []);
   //   search, searchStatus, searchType, sort, page
   if (isLoading) {
@@ -35,7 +34,6 @@ const MyCustomersContainer = () => {
       </Wrapper>
     );
   }
-
   return (
     <Wrapper>
       <h5> لديك ({mycustomers.length}) عملاء:</h5>

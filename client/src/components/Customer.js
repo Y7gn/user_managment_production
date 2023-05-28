@@ -23,6 +23,16 @@ const Job = ({
 
   let date = moment(createdAt);
   date = date.format("MM Do, YYYY");
+  let customerTheme;
+  if (customerstatus === "عميل تم الانجاز") {
+    customerTheme = "done";
+  } else if (customerstatus === "الحسبة قيد الانتظار") {
+    customerTheme = "pending";
+  } else if (customerstatus === "عميل متردد") {
+    customerTheme = "interview";
+  } else {
+    customerTheme = "declined";
+  }
 
   return (
     <Wrapper>
@@ -65,7 +75,7 @@ const Job = ({
             <JobInfo icon={<FaBriefcase />} text={createdBy.name} />
           )}
           {/* <JobInfo icon={<FaBriefcase />} text={obligations} /> */}
-          <div className={`status interview`}>{customerstatus}</div>
+          <div className={`status ${customerTheme}`}>{customerstatus}</div>
           {/* <div className={`status ${customerstatus}`}>{customerstatus}</div> */}
         </div>
         <footer></footer>

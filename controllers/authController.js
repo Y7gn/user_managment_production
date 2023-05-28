@@ -103,7 +103,9 @@ const allUsers = async (req, res) => {
   res.status(StatusCodes.OK).json({ users });
 };
 const getCurrentUser = async (req, res) => {
+  // if(req.user.isAdmin){}
   const user = await User.findOne({ _id: req.user.userId });
+
   res.status(StatusCodes.OK).json({ user });
 };
 const getSingleUserCustomers = async (req, res) => {

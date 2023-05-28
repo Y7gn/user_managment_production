@@ -63,6 +63,10 @@ const Wrapper = styled.article`
     display: flex;
     align-items: center;
   }
+  .done {
+    background: var(--green-dark);
+    color: var(--green-light);
+  }
   .pending {
     background: #fcefc7;
     color: #e9b949;

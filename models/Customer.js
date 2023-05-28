@@ -20,12 +20,12 @@ const CustomerSchema = new mongoose.Schema(
     },
     customerstatus: {
       type: String,
-      enum: [
-        "عميل تم الانجاز",
-        "الحسبة قيد الانتظار",
-        "عميل متردد",
-        "عميل لم يوافق",
-      ],
+      // enum: [
+      //   "عميل تم الانجاز",
+      //   "الحسبة قيد الانتظار",
+      //   "عميل متردد",
+      //   "عميل لم يوافق",
+      // ],
       // enum: ["done", "waiting", "refused", "unsure"],
       // default: "waiting customer",
     },

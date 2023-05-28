@@ -9,7 +9,6 @@ import {
 import CheckPremissions from "../utils/CheckPremissions.js";
 import mongoose from "mongoose";
 import moment from "moment";
-// customername,phonenumber,companypercentage,excesscashcustomer,customerstatus,supportedornot,salarybank,financebank,obligations,buildingPlace,CompanyPercentage
 const createCustomer = async (req, res) => {
   const {
     customername,
@@ -24,11 +23,25 @@ const createCustomer = async (req, res) => {
     buildingPlace,
   } = req.body;
 
+  console.log("customerstatus  is :" + customerstatus);
+  console.log("companypercentage  is :" + companypercentage);
   if (!customername) {
     throw new BadRequestError("Please provide all values");
   }
   req.body.createdBy = req.user.userId;
-  const customer = await Customer.create(req.body);
+  const customer = await Customer.create({
+    customername: customername,
+    phonenumber: phonenumber,
+    companypercentage: companypercentage,
+    excesscashcustomer: excesscashcustomer,
+    customerstatus: customerstatus,
+    supportedornot: supportedornot,
+    salarybank: salarybank,
+    financebank: financebank,
+    obligations: obligations,
+    buildingPlace: buildingPlace,
+    createdBy: req.user.userId,
+  });
   res.status(StatusCodes.CREATED).json({ customer });
 };
 const getAllCustomers = async (req, res) => {

@@ -7,9 +7,10 @@ import { MdQueryStats } from "react-icons/md";
 import { FaWpforms } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { useAppContext } from "../context/appContext";
+import { useEffect } from "react";
 const NavLinks = ({ ToggleSideBar }) => {
   const { user } = useAppContext();
-  console.log(user.permissions);
+  // console.log(user.permissions);
   const links = [
     {
       id: 1,
@@ -26,11 +27,18 @@ const NavLinks = ({ ToggleSideBar }) => {
       path: ["add-employee", "all-employee"],
       icon: <MdQueryStats />,
       menuItems: [
-        "add new employee",
+        {
+          name: "add new employee",
+          value: user.permissions?.addEmployee ?? true,
+        },
         // "أدوار الموظفين",
-        "all employees",
+        {
+          name: "all employees",
+          value: user.permissions?.showAllEmployee ?? true,
+        },
         // "الموظف المثالي",
       ],
+      // roles: [user.permissions.addEmployee, user.permissions.showAllEmployee], // <-- only addEmployee role/permission
     },
     {
       id: 3,
@@ -39,12 +47,26 @@ const NavLinks = ({ ToggleSideBar }) => {
       path: ["add-customer", "emp-customers", "all-customers"],
       icon: <FaWpforms />,
       menuItems: [
-        "add new customer",
+        {
+          name: "add new customer",
+          value: user.permissions?.addCustomer ?? true,
+        },
+        { name: "my customers", value: true },
+        {
+          name: "all customers",
+          value: user.permissions?.showAllCustomers ?? true,
+        },
+        // "add new customer",
         // "ارسال عميل",
         // "الحسابات المنتظرة",
-        "my customers",
-        "all customers",
+        // "my customers",
+        // "all customers",
       ],
+      // roles: [
+      //   user.permissions.addCustomer,
+      //   true,
+      //   user.permissions.showAllCustomers,
+      // ],
     },
     {
       id: 4,
@@ -59,14 +81,6 @@ const NavLinks = ({ ToggleSideBar }) => {
         "الموظف المثالي",
       ],
     },
-    // {
-    //   id: 4,
-    //   text: "reports",
-    //   // path: 'profile',
-    //   path: ["profile", "/", "all-jobs", "add-job"],
-    //   icon: <ImProfile />,
-    //   menuItems: ["add", " roles", " all", "best "],
-    // },
   ];
   const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
   const [isDropdownOpen3, setIsDropdownOpen3] = useState(false);
@@ -98,7 +112,7 @@ const NavLinks = ({ ToggleSideBar }) => {
       secondnavcontainer: true,
       thirdnavcontainer: false,
     }));
-    console.log(activeStatus);
+    // console.log(activeStatus);
   };
   const thirdFunction = () => {
     setActiveStatus((prevState) => ({
@@ -108,32 +122,35 @@ const NavLinks = ({ ToggleSideBar }) => {
       thirdnavcontainer: true,
     }));
   };
-  //   console.log(activeStatus.firstnavcontainer);
+
   return (
     <div className="nav-links">
       {links.map((link) => {
-        const { text, path, id, icon, menuItems } = link;
+        const { text, path, id, icon, menuItems, roles } = link;
+
         return (
           <>
             {/* first item */}
             {id === 1 && (
               <div className="nav-item extra" onClick={firstFunction}>
                 <ul className="dropdown-menu">
-                  {menuItems.map((item, index) => (
-                    <NavLink
-                      to={path[index]}
-                      // onClick={ToggleSideBar}
-                      className={({ isActive }) =>
-                        isActive
-                          ? "dropdownmenu-item red-background"
-                          : "dropdownmenu-item"
-                      }
-                    >
-                      <div className="dropdown-itemcontainer">
-                        <span className="dropdown-itemtext">{item}</span>
-                      </div>
-                    </NavLink>
-                  ))}
+                  {menuItems
+                    .filter((item) => !item.roles)
+                    .map((item, index) => (
+                      <NavLink
+                        to={path[index]}
+                        // onClick={ToggleSideBar}
+                        className={({ isActive }) =>
+                          isActive
+                            ? "dropdownmenu-item red-background"
+                            : "dropdownmenu-item"
+                        }
+                      >
+                        <div className="dropdown-itemcontainer">
+                          <span className="dropdown-itemtext">{item}</span>
+                        </div>
+                      </NavLink>
+                    ))}
                 </ul>
               </div>
             )}
@@ -156,21 +173,25 @@ const NavLinks = ({ ToggleSideBar }) => {
                 </button>
                 {isDropdownOpen2 && (
                   <ul className="dropdown-menu">
-                    {menuItems.map((item, index) => (
-                      <NavLink
-                        to={path[index]}
-                        // onClick={ToggleSideBar}
-                        className={({ isActive }) =>
-                          isActive
-                            ? "dropdownmenu-item active"
-                            : "dropdownmenu-item"
-                        }
-                      >
-                        <div className="dropdown-itemcontainer">
-                          <span className="dropdown-itemtext">{item}</span>
-                        </div>
-                      </NavLink>
-                    ))}
+                    {menuItems
+                      .filter((menuItem) => menuItem.value !== false)
+                      .map((menuItem, index) => (
+                        <NavLink
+                          to={path[index]}
+                          // onClick={ToggleSideBar}
+                          className={({ isActive }) =>
+                            isActive
+                              ? "dropdownmenu-item active"
+                              : "dropdownmenu-item"
+                          }
+                        >
+                          <div className="dropdown-itemcontainer">
+                            <span className="dropdown-itemtext">
+                              {menuItem.name}
+                            </span>
+                          </div>
+                        </NavLink>
+                      ))}
                   </ul>
                 )}
               </div>
@@ -193,21 +214,25 @@ const NavLinks = ({ ToggleSideBar }) => {
                 </button>
                 {isDropdownOpen3 && (
                   <ul className="dropdown-menu">
-                    {menuItems.map((item, index) => (
-                      <NavLink
-                        to={path[index]}
-                        // onClick={ToggleSideBar}
-                        className={({ isActive }) =>
-                          isActive
-                            ? "dropdownmenu-item active"
-                            : "dropdownmenu-item"
-                        }
-                      >
-                        <div className="dropdown-itemcontainer">
-                          <span className="dropdown-itemtext">{item}</span>
-                        </div>
-                      </NavLink>
-                    ))}
+                    {menuItems
+                      .filter((menuItem) => menuItem.value !== false)
+                      .map((item, index) => (
+                        <NavLink
+                          to={path[index]}
+                          // onClick={ToggleSideBar}
+                          className={({ isActive }) =>
+                            isActive
+                              ? "dropdownmenu-item active"
+                              : "dropdownmenu-item"
+                          }
+                        >
+                          <div className="dropdown-itemcontainer">
+                            <span className="dropdown-itemtext">
+                              {item.name}
+                            </span>
+                          </div>
+                        </NavLink>
+                      ))}
                   </ul>
                 )}
               </div>
@@ -220,6 +245,7 @@ const NavLinks = ({ ToggleSideBar }) => {
 };
 
 export default NavLinks;
+
 // {
 /* {id === 4 && (
   <div className="nav-item extra">
@@ -256,7 +282,11 @@ export default NavLinks;
 )} */
 // }
 
-// hey i have a navbar  and set of premissions coming from the backend
-// {addCustomer: false, editAndDeleteCustomer: false, showAllCustomers: false, addEmployee: false, editAndDeleteEmployee: false, …}
-
-// since add customer if false i don't want to show the add customer section
+// {
+//   id: 4,
+//   text: "reports",
+//   // path: 'profile',
+//   path: ["profile", "/", "all-jobs", "add-job"],
+//   icon: <ImProfile />,
+//   menuItems: ["add", " roles", " all", "best "],
+// },
