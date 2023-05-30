@@ -1,9 +1,10 @@
-import { FormRow, Alert } from "../../components";
-// FormRowSelect
-import { useAppContext } from "../../context/appContext";
-import Wrapper from "../../assets/wrappers/DashboardFormPage";
-import { useState } from "react";
-import CheckBox from "../../components/checkBox";
+// import { FormRow, Alert } from "../../../../components";
+import { FormRow, Alert } from "../../../components";
+import { useAppContext } from "../../../context/appContext";
+import Wrapper from "../../../assets/wrappers/DashboardFormPage";
+import CheckBox from "../../../components/checkBox";
+import { Navigate } from "react-router-dom";
+import Loading from "../../../components/Loading";
 
 const AddEmployee = () => {
   const {
@@ -29,6 +30,8 @@ const AddEmployee = () => {
     clearValues,
     createEmployee,
     editEmployee,
+    user,
+    userLoading,
   } = useAppContext();
 
   const handleSubmit = (e) => {
@@ -59,7 +62,11 @@ const AddEmployee = () => {
     // console.log(`${name} : ${value}`);
     handleChange({ name, value });
   };
-
+  if (userLoading) return <Loading />;
+  if (!user.permissions.addEmployee) {
+    console.log("add Employee");
+    return <Navigate to="/" />;
+  }
   return (
     <Wrapper>
       <form className="form">

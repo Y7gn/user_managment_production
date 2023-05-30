@@ -16,9 +16,9 @@ import {
   UPDATE_USER_ERROR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
-  CREATE_JOB_BEGIN,
-  CREATE_JOB_SUCCESS,
-  CREATE_JOB_ERROR,
+  CREATE_EMPLOYEE_CUSTOMER_BEGIN,
+  CREATE_EMPLOYEE_CUSTOMER_SUCCESS,
+  CREATE_EMPLOYEE_CUSTOMER_ERROR,
   GET_JOBS_BEGIN,
   GET_JOBS_SUCCESS,
   SET_EDIT_JOB,
@@ -171,6 +171,7 @@ const reducer = (state, action) => {
   if (action.type === CLEAR_VALUES) {
     const initialState = {
       isEditing: false,
+      isEditingCustomer: false,
       editEmployeeId: "",
       position: "",
       company: "",
@@ -179,6 +180,8 @@ const reducer = (state, action) => {
       statusOptions: ["interview", "declined", "pending"],
 
       newcustomername: "",
+      customername: "",
+      phonenumber: "",
       newcustomerusername: "",
       newcustomerpassword: "",
       addEmployeeCheckBox: false,
@@ -187,6 +190,20 @@ const reducer = (state, action) => {
       addCustomerCheckBox: false,
       allCustomersCheckBox: false,
       editDeleteCustomerCheckBox: false,
+      salarybank: "الاهلي",
+      financebank: "الاهلي",
+      supportedornot: "مدعوم",
+      excesscashcustomer: "قيد الانتظار",
+      companypercentage: "",
+      obligations: {
+        personalloan: false,
+        creditbank: false,
+        developmentbank: false,
+        car: false,
+        yusrcompany: false,
+        nayifat: false,
+        other: "",
+      },
     };
     return {
       ...state,
@@ -194,22 +211,22 @@ const reducer = (state, action) => {
     };
   }
 
-  if (action.type === CREATE_JOB_BEGIN) {
+  if (action.type === CREATE_EMPLOYEE_CUSTOMER_BEGIN) {
     return {
       ...state,
       isLoading: true,
     };
   }
-  if (action.type === CREATE_JOB_SUCCESS) {
+  if (action.type === CREATE_EMPLOYEE_CUSTOMER_SUCCESS) {
     return {
       ...state,
       isLoading: false,
       showAlert: true,
       alertType: "success",
-      alertText: "New Job Created!",
+      alertText: action.payload.msg,
     };
   }
-  if (action.type === CREATE_JOB_ERROR) {
+  if (action.type === CREATE_EMPLOYEE_CUSTOMER_ERROR) {
     return {
       ...state,
       isLoading: false,
@@ -218,22 +235,15 @@ const reducer = (state, action) => {
       alertText: action.payload.msg,
     };
   }
+
   if (action.type === GET_JOBS_BEGIN) {
     return { ...state, isLoading: true, showAlert: false };
   }
-  if (action.type === GET_JOBS_SUCCESS) {
-    return {
-      ...state,
-      jobs: action.payload.jobs,
-      totalJobs: action.payload.totalJobs,
-      numOfPages: action.payload.numOfPages,
-      isLoading: false,
-    };
-  }
+
   if (action.type === GET_EMPLOYEE_SUCCESS) {
     return {
       ...state,
-      employees: action.payload.users,
+      employees: action.payload.employees,
       //   jobs: action.payload.jobs,
       //   totalJobs: action.payload.totalJobs,
       //   numOfPages: action.payload.numOfPages,
@@ -280,13 +290,22 @@ const reducer = (state, action) => {
     };
   }
   if (action.type === SET_EDIT_CUSTOMER) {
-    const customers = state.customers.find(
-      (customer) => customer._id === action.payload.id
-    );
+    let customerToEdit;
+    if (state.customers || state.customers.length === 0) {
+      customerToEdit = state.mycustomers.find(
+        (customer) => customer._id === action.payload.id
+      );
+      console.log("var");
+      console.log(state.mycustomers);
+      console.log(state.customers);
+    } else {
+      customerToEdit = state.customers.find(
+        (customer) => customer._id === action.payload.id
+      );
+      console.log(state.customers);
+      console.log("null");
+    }
 
-    customers == null ??
-      state.mycustomers.find((customer) => customer._id === action.payload.id);
-    console.log(customers);
     const {
       _id,
       customername,
@@ -299,8 +318,7 @@ const reducer = (state, action) => {
       financebank,
       obligations,
       buildingPlace,
-    } = customers;
-    console.log(obligations);
+    } = customerToEdit;
 
     let companypercentageOptionsInput;
     let excesscashcustomerOptionsInput;
@@ -376,10 +394,6 @@ const reducer = (state, action) => {
 
       buildingPlace: buildingPlaceEdited,
       buildingPlaceOptionsInput,
-      // position,
-      // jobLocation,
-      // jobType,
-      // status,
     };
   }
   if (action.type === DELETE_CUSTOMER_BEGIN) {

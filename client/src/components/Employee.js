@@ -9,14 +9,12 @@ const Employee = ({
   _id,
   name,
   username,
-  //   position,
-  //   company,
   //   jobLocation,
   //   createdAt,
   //   status,
   //   jobType,
 }) => {
-  const { setEditEmployee, deleteJob } = useAppContext();
+  const { setEditEmployee, deleteEmployee } = useAppContext();
 
   //   let date = moment(createdAt);
   //   date = date.format("MM Do, YYYY");
@@ -53,7 +51,7 @@ const Employee = ({
             className="btn employeedelete-btn"
             onClick={(e) => {
               e.preventDefault();
-              deleteJob(_id);
+              deleteEmployee(_id);
             }}
           >
             Delete

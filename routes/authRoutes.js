@@ -11,6 +11,8 @@ import {
   allUsers,
   updateUserInformation,
   getSingleUserCustomers,
+  CreateEmployee,
+  deleteEmployee,
 } from "../controllers/authController.js";
 import authenticateUser from "../middleware/auth.js";
 
@@ -22,6 +24,7 @@ import authenticateUser from "../middleware/auth.js";
 
 // apiLimiter
 router.route("/CreateUser").post(CreateUser);
+router.route("/CreateEmployee").post(CreateEmployee);
 
 // apiLimiter
 router.route("/login").post(login);
@@ -32,6 +35,7 @@ router
   .route("/getSingleUserCustomers")
   .get(authenticateUser, getSingleUserCustomers);
 router.route("/getCurrentUser").get(authenticateUser, getCurrentUser);
+router.route("/:id").delete(authenticateUser, deleteEmployee);
 router.get("/logout", logoutUser);
 
 export default router;

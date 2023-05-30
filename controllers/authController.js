@@ -3,6 +3,7 @@ import Customer from "../models/Customer.js";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, UnAuthenticatedError } from "../errors/index.js";
 import attachCookie from "../utils/attachCookies.js";
+import bcrypt from "bcryptjs";
 
 const CreateUser = async (req, res) => {
   const { username, password, name, permissions } = req.body;
@@ -32,18 +33,40 @@ const CreateUser = async (req, res) => {
   console.log(user);
   const token = user.createJWT();
   attachCookie({ res, token });
-  //############## let's create function for this #################
-  // const oneDay = 1000 *60*60*24
 
-  // res.cookie('token',token,{
-  //     httpOnly:true,
-  //     expires:new Date(Date.now() + oneDay),
-  //     secure: process.env.NODE_ENV
-  // })//ONCE cookies expire the cookie will finish jwt will not be located over there
   res.status(StatusCodes.CREATED).json({
     user: {
       username: user.username,
     },
+  }); //remove token
+};
+const CreateEmployee = async (req, res) => {
+  const { username, password, name, permissions } = req.body;
+
+  if (!username || !password || !name) {
+    throw new BadRequestError("please provide all the values");
+  }
+  const userAlreadyExists = await User.findOne({ username });
+  if (userAlreadyExists) {
+    throw new BadRequestError("Username already in use");
+  }
+
+  await User.create({
+    username,
+    name,
+    password,
+    permissions: {
+      addCustomer: req.body.addCustomerCheckBox,
+      editAndDeleteCustomer: req.body.editDeleteEmployeeCheckBox,
+      showAllCustomers: req.body.allCustomersCheckBox,
+      addEmployee: req.body.addEmployeeCheckBox,
+      editAndDeleteEmployee: req.body.editDeleteEmployeeCheckBox,
+      showAllEmployee: req.body.allEmployeeCheckBox,
+    },
+  });
+
+  res.status(StatusCodes.CREATED).json({
+    msg: "Create Employee",
   }); //remove token
 };
 // without async-wrapper
@@ -98,9 +121,9 @@ const allUsers = async (req, res) => {
 
   // console.log("fdlsfldslfslfldsflflslf");
   let myUserId = req.user.userId;
-  let users = result.filter((user) => user["_id"] != myUserId);
+  let employees = result.filter((user) => user["_id"] != myUserId);
   // users = users[0]["_id"];
-  res.status(StatusCodes.OK).json({ users });
+  res.status(StatusCodes.OK).json({ employees });
 };
 const getCurrentUser = async (req, res) => {
   // if(req.user.isAdmin){}
@@ -133,12 +156,16 @@ const updateUserInformation = async (req, res) => {
   if (!user) {
     throw new NotFoundError(`No job with id ${editEmployeeId}.`);
   }
-
+  const salt = await bcrypt.genSalt(10);
+  let encPass = await bcrypt.hash(password, salt);
   // check premission
   // CheckPremissions(req.user, user.createdBy);
   const updateJob = await User.findOneAndUpdate(
     { _id: editEmployeeId },
     {
+      username,
+      name,
+      encPass,
       permissions: {
         addCustomer: req.body.addCustomerCheckBox,
         editAndDeleteCustomer: req.body.editDeleteEmployeeCheckBox,
@@ -153,9 +180,22 @@ const updateUserInformation = async (req, res) => {
       runValidators: true,
     }
   );
-
+  console.log("updateJob");
+  console.log(updateJob);
   res.status(StatusCodes.OK).json({ updateJob });
   // res.send('update job')
+};
+
+const deleteEmployee = async (req, res) => {
+  const { id: EmployeeId } = req.params;
+
+  const employee = await User.findOne({ _id: EmployeeId });
+  if (!employee) {
+    throw new NotFoundError(`No Employee with id ${EmployeeId}.`);
+  }
+  // CheckPremissions(req.user, customer.createdBy);
+  await employee.remove();
+  res.status(StatusCodes.OK).json({ msg: `Success! Employee removed` });
 };
 export {
   CreateUser,
@@ -166,4 +206,6 @@ export {
   allUsers,
   updateUserInformation,
   getSingleUserCustomers,
+  CreateEmployee,
+  deleteEmployee,
 };

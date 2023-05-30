@@ -38,7 +38,7 @@ if (process.env.NODE_ENV !== "production") {
 // app.get('/api/v1',(req,res)=>{
 //     res.json({msg:'API '})
 // })
-const _dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url));
 //only when deploy
 
 app.use(express.json());
@@ -47,7 +47,7 @@ app.use(helmet());
 app.use(xss());
 app.use(mongoSanitize());
 //public///// assest
-app.use(express.static(path.resolve(_dirname, "./client/build")));
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/customer", authenticateUser, customerRoutes);

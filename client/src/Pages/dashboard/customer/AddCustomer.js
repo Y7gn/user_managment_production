@@ -1,13 +1,15 @@
-import { useAppContext } from "../../context/appContext";
-import Wrapper from "../../assets/wrappers/DashboardFormPage";
+import { useAppContext } from "../../../context/appContext";
+import Wrapper from "../../../assets/wrappers/DashboardFormPage";
 import {
   FormRow,
   Alert,
   FormRowSelect,
   CheckBoxOptions,
-} from "../../components";
-import CheckBox from "../../components/checkBox";
+} from "../../../components";
+import CheckBox from "../../../components/checkBox";
 import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import Loading from "../../../components/Loading";
 
 const AllCustomer = () => {
   const {
@@ -53,27 +55,31 @@ const AllCustomer = () => {
     buildingPlace,
     buildingPlaceOptions,
     buildingPlaceOptionsInput,
+    displayAlert,
+    user,
+    userLoading,
+    getCustomers,
+    getMyCustomers,
   } = useAppContext();
 
   useEffect(() => {
     console.log("triggered");
-  }, [companypercentage]);
+  }, [isEditingCustomer]);
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(status);
-    // console.log();
 
-    // if (!position || !company || !jobLocation) {
-    //   displayAlert();
-    //   return;
-    // }
+    if (!customername || !customerstatus) {
+      displayAlert();
+      return;
+    }
 
     if (isEditingCustomer) {
-      //eventually editJob()
       editCustomer();
       return;
     }
     createCustomer();
+    getCustomers();
+    getMyCustomers();
     console.log("create customer");
   };
 
@@ -107,6 +113,11 @@ const AllCustomer = () => {
     handleChange({ name, value });
   };
 
+  if (userLoading) return <Loading />;
+  if (!user.permissions.addCustomer) {
+    console.log("add customer");
+    return <Navigate to="/" />;
+  }
   return (
     <Wrapper>
       <form className="form">

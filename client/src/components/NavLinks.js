@@ -28,12 +28,12 @@ const NavLinks = ({ ToggleSideBar }) => {
       icon: <MdQueryStats />,
       menuItems: [
         {
-          name: "add new employee",
+          name: "اضافة موظف",
           value: user.permissions?.addEmployee ?? true,
         },
         // "أدوار الموظفين",
         {
-          name: "all employees",
+          name: "جميع الموظفين",
           value: user.permissions?.showAllEmployee ?? true,
         },
         // "الموظف المثالي",
@@ -48,12 +48,12 @@ const NavLinks = ({ ToggleSideBar }) => {
       icon: <FaWpforms />,
       menuItems: [
         {
-          name: "add new customer",
+          name: "اضافة عميل جديد",
           value: user.permissions?.addCustomer ?? true,
         },
-        { name: "my customers", value: true },
+        { name: "عملائي", value: true },
         {
-          name: "all customers",
+          name: "جميع العملاء",
           value: user.permissions?.showAllCustomers ?? true,
         },
         // "add new customer",

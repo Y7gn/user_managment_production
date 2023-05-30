@@ -15,11 +15,10 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_ERROR,
   CLEAR_VALUES,
-  CREATE_JOB_BEGIN,
-  CREATE_JOB_SUCCESS,
-  CREATE_JOB_ERROR,
+  CREATE_EMPLOYEE_CUSTOMER_BEGIN,
+  CREATE_EMPLOYEE_CUSTOMER_SUCCESS,
+  CREATE_EMPLOYEE_CUSTOMER_ERROR,
   GET_JOBS_BEGIN,
-  GET_JOBS_SUCCESS,
   SET_EDIT_JOB,
   SET_EDIT_CUSTOMER,
   DELETE_CUSTOMER_BEGIN,
@@ -291,8 +290,8 @@ const AppProvider = ({ children }) => {
   };
 
   const createCustomer = async () => {
-    dispatch({ type: CREATE_JOB_BEGIN });
-
+    console.log("creating customer");
+    dispatch({ type: CREATE_EMPLOYEE_CUSTOMER_BEGIN });
     try {
       const {
         customername,
@@ -387,12 +386,15 @@ const AppProvider = ({ children }) => {
         obligations: obligations,
         buildingPlace: buildingPlaceResult,
       });
-      dispatch({ type: CREATE_JOB_SUCCESS });
-      dispatch({ type: CLEAR_VALUES });
+      dispatch({
+        type: CREATE_EMPLOYEE_CUSTOMER_SUCCESS,
+        payload: { msg: "تم انشاء عميل" },
+      });
+      // dispatch({ type: CLEAR_VALUES });
     } catch (error) {
       if (error.response.status === 401) return;
       dispatch({
-        type: CREATE_JOB_ERROR,
+        type: CREATE_EMPLOYEE_CUSTOMER_ERROR,
         payload: { msg: error.response.data.msg },
       });
     }
@@ -501,7 +503,7 @@ const AppProvider = ({ children }) => {
   };
 
   const createEmployee = async () => {
-    dispatch({ type: CREATE_JOB_BEGIN });
+    dispatch({ type: CREATE_EMPLOYEE_CUSTOMER_BEGIN });
     try {
       const {
         newcustomername,
@@ -514,7 +516,7 @@ const AppProvider = ({ children }) => {
         allCustomersCheckBox,
         editDeleteCustomerCheckBox,
       } = state;
-      await authFetch.post("/auth/CreateUser", {
+      await authFetch.post("/auth/CreateEmployee", {
         name: newcustomername,
         username: newcustomerusername,
         password: newcustomerpassword,
@@ -525,59 +527,29 @@ const AppProvider = ({ children }) => {
         allCustomersCheckBox,
         editDeleteCustomerCheckBox,
       });
-      dispatch({ type: CREATE_JOB_SUCCESS });
+      dispatch({
+        type: CREATE_EMPLOYEE_CUSTOMER_SUCCESS,
+        payload: { msg: "تم انشاء موظف" },
+      });
       dispatch({ type: CLEAR_VALUES });
     } catch (error) {
       if (error.response.status === 401) return;
       dispatch({
-        type: CREATE_JOB_ERROR,
+        type: CREATE_EMPLOYEE_CUSTOMER_ERROR,
         payload: { msg: error.response.data.msg },
       });
     }
   };
 
-  const getJobs = async () => {
-    const { page, search, searchCustomerStatus, searchType, sort } = state;
-    // console.log(search, searchStatus, searchType, sort);
-    // if (searchCustomerStatus === "الجميع") {
-    //   searchStatus = "all";
-    // } else if (searchCustomerStatus === "عميل تم الانجاز") {
-    //   searchStatus = "all";
-    // }
-    let url = `/customer?customerstatus=${searchCustomerStatus}`;
-    // let url = `/customer?page=${page}customerstatus=${searchCustomerStatus}&jobType=${searchType}&sort=${sort}`;
-    // if (search) {
-    //   url = url + `&search=${search}`;
-    // }
-
-    dispatch({ type: GET_JOBS_BEGIN });
-    try {
-      const { data } = await authFetch(url);
-      console.log(data);
-      const { jobs, totalJobs, numOfPages } = data;
-      dispatch({
-        type: GET_JOBS_SUCCESS,
-        payload: {
-          jobs,
-          totalJobs,
-          numOfPages,
-        },
-      });
-    } catch (error) {
-      // console.log(error);
-      //   logoutUser();
-    }
-    clearAlert();
-  };
   const getEmployee = async () => {
     dispatch({ type: GET_JOBS_BEGIN });
     try {
       const { data } = await authFetch(`/auth/allUsers`);
       console.log(data);
-      const { users } = data;
+      const { employees } = data;
       dispatch({
         type: GET_EMPLOYEE_SUCCESS,
-        payload: { users },
+        payload: { employees },
       });
     } catch (error) {
       // console.log(error);
@@ -645,21 +617,23 @@ const AppProvider = ({ children }) => {
       await authFetch.delete(`/customer/${id}`);
       getMyCustomers();
     } catch (error) {
-      console.log(error.response);
+      // console.log(error.response);
+      // dispatch({ type: GENERAL_ERROR, payload: { msg: error.response } });
+
       logoutUser();
     }
   };
-  //  const deleteJob = async (jobId) => {
-  //     dispatch({ type: DELETE_JOB_BEGIN });
-  //     try {
-  //       await authFetch.delete(`/jobs/${jobId}`);
-  //       getJobs();
-  //     } catch (error) {
-  //       // console.log(error.response);
-  //       logoutUser();
-  //     }
-  //     // console.log(`set edit job ${id}`);
-  //   };
+  const deleteEmployee = async (id) => {
+    // console.log(`set edit employee ${id}`);
+    dispatch({ type: DELETE_CUSTOMER_BEGIN });
+    try {
+      await authFetch.delete(`/auth/${id}`);
+      getEmployee();
+    } catch (error) {
+      logoutUser();
+    }
+  };
+
   const editEmployee = async () => {
     dispatch({ type: EDIT_JOB_BEGIN });
     try {
@@ -674,6 +648,17 @@ const AppProvider = ({ children }) => {
         allCustomersCheckBox,
         editDeleteCustomerCheckBox,
       } = state;
+      console.log(
+        newcustomername,
+        newcustomerusername,
+        newcustomerpassword,
+        addEmployeeCheckBox,
+        allEmployeeCheckBox,
+        editDeleteEmployeeCheckBox,
+        addCustomerCheckBox,
+        allCustomersCheckBox,
+        editDeleteCustomerCheckBox
+      );
       await authFetch.patch(`/auth/${state.editEmployeeId}`, {
         name: newcustomername,
         username: newcustomerusername,
@@ -702,17 +687,7 @@ const AppProvider = ({ children }) => {
       });
     }
   };
-  // const deleteJob = async (jobId) => {
-  //   dispatch({ type: DELETE_JOB_BEGIN });
-  //   try {
-  //     await authFetch.delete(`/jobs/${jobId}`);
-  //     getJobs();
-  //   } catch (error) {
-  //     // console.log(error.response);
-  //     logoutUser();
-  //   }
-  //   // console.log(`set edit job ${id}`);
-  // };
+
   const showStats = async () => {
     dispatch({ type: SHOW_STATS_BEGIN });
     try {
@@ -740,6 +715,10 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CHANGE_PAGE, payload: { page } });
   };
   const getCurrentUser = async () => {
+    console.log("getCurrentUser");
+    console.log("getCurrentUser");
+    console.log("getCurrentUser");
+    console.log("getCurrentUser");
     dispatch({ type: GET_CURRENT_USER_BEGIN });
     try {
       const { data } = await authFetch("/auth/getCurrentUser");
@@ -753,7 +732,7 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     getCurrentUser();
-    // getCustomers();
+    getMyCustomers();
   }, []);
 
   return (
@@ -770,7 +749,6 @@ const AppProvider = ({ children }) => {
         clearValues,
         createEmployee,
         createCustomer,
-        getJobs,
         setEditEmployee,
         editEmployee,
         showStats,
@@ -783,6 +761,7 @@ const AppProvider = ({ children }) => {
         editCustomer,
         setEditCustomer,
         deleteCustomer,
+        deleteEmployee,
         getCustomers,
         getMyCustomers,
       }}

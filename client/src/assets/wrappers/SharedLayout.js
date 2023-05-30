@@ -4,7 +4,7 @@ const Wrapper = styled.section`
   .dashboard {
     display: grid;
     grid-template-columns: 1fr;
-    /* overflow: hidden; */
+    overflow: hidden;
   }
   .dashboard-pages {
     width: 90vw;

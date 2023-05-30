@@ -19,7 +19,8 @@ const Job = ({
   createdAt,
   noCreator,
 }) => {
-  const { setEditCustomer, deleteCustomer } = useAppContext();
+  const { setEditCustomer, deleteCustomer, mycustomers, user } =
+    useAppContext();
 
   let date = moment(createdAt);
   date = date.format("MM Do, YYYY");
@@ -33,7 +34,18 @@ const Job = ({
   } else {
     customerTheme = "declined";
   }
-
+  const isItAllowed =
+    mycustomers.filter((element) => element._id === _id).length === 1 ||
+    user.permissions.editAndDeleteCustomer;
+  console.log(isItAllowed);
+  // if (
+  //   mycustomers.filter((element) => element._id === _id).length === 1 ||
+  //   user.permissions.editAndDeleteCustomer === true
+  // ) {
+  //   console.log("you can edit and delete");
+  // } else {
+  //   console.log("you can't edit or delete");
+  // }
   return (
     <Wrapper>
       <header>
@@ -44,22 +56,26 @@ const Job = ({
             <p>{phonenumber}</p>
           </div>
           <div className="actions">
-            <Link
-              className="btn employeeedit-btn"
-              to="/add-customer"
-              onClick={() => setEditCustomer(_id)}
-            >
-              Edit
-            </Link>
-            <button
-              className="btn employeedelete-btn"
-              onClick={(e) => {
-                // e.preventDefault()
-                deleteCustomer(_id);
-              }}
-            >
-              Delete
-            </button>
+            {isItAllowed && (
+              <Link
+                className="btn employeeedit-btn"
+                to="/add-customer"
+                onClick={() => setEditCustomer(_id)}
+              >
+                Edit
+              </Link>
+            )}
+            {isItAllowed && (
+              <button
+                className="btn employeedelete-btn"
+                onClick={(e) => {
+                  // e.preventDefault()
+                  deleteCustomer(_id);
+                }}
+              >
+                Delete
+              </button>
+            )}
           </div>
         </div>
       </header>
