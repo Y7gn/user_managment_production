@@ -45,7 +45,7 @@ const Employee = ({
             to="/add-employee"
             onClick={() => setEditEmployee(_id)}
           >
-            Edit
+            تعديل
           </Link>
           <button
             className="btn employeedelete-btn"
@@ -54,7 +54,7 @@ const Employee = ({
               deleteEmployee(_id);
             }}
           >
-            Delete
+            حذف
           </button>
         </div>
         {/* </footer> */}

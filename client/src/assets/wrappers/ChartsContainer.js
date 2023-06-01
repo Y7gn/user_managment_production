@@ -1,8 +1,13 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const Wrapper = styled.section`
   margin-top: 4rem;
   text-align: center;
+  .statsButton {
+    border: 1px solid #e0e0e0;
+    padding: 0.5rem 1rem;
+    /* background-color: #ffffff; */
+  }
   button {
     background: transparent;
     border-color: transparent;
@@ -15,6 +20,6 @@ const Wrapper = styled.section`
     text-align: center;
     margin-bottom: 0.75rem;
   }
-`
+`;
 
-export default Wrapper
+export default Wrapper;

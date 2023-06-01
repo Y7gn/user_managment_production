@@ -5,7 +5,7 @@ import { useAppContext } from "../context/appContext";
 import Wrapper from "../assets/wrappers/Customer";
 import JobInfo from "./JobInfo";
 
-const Job = ({
+const Customer = ({
   _id,
   customername,
   customerstatus,
@@ -62,7 +62,7 @@ const Job = ({
                 to="/add-customer"
                 onClick={() => setEditCustomer(_id)}
               >
-                Edit
+                تعديل
               </Link>
             )}
             {isItAllowed && (
@@ -73,7 +73,7 @@ const Job = ({
                   deleteCustomer(_id);
                 }}
               >
-                Delete
+                حذف
               </button>
             )}
           </div>
@@ -88,7 +88,10 @@ const Job = ({
           <JobInfo icon={<FaBriefcase />} text={financebank} />
           <JobInfo icon={<FaBriefcase />} text={buildingPlace} />
           {!noCreator && (
-            <JobInfo icon={<FaBriefcase />} text={createdBy.name} />
+            <JobInfo
+              icon={<FaBriefcase />}
+              text={"بواسطة: " + (createdBy?.name || "غير معرف")}
+            />
           )}
           {/* <JobInfo icon={<FaBriefcase />} text={obligations} /> */}
           <div className={`status ${customerTheme}`}>{customerstatus}</div>
@@ -100,4 +103,4 @@ const Job = ({
   );
 };
 
-export default Job;
+export default Customer;

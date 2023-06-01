@@ -158,7 +158,7 @@ const AddEmployee = () => {
               onClick={handleSubmit}
               disabled={isLoading}
             >
-              submit
+              تاكيد
             </button>
             <button
               className="btn btn-block clear-btn"
@@ -167,7 +167,7 @@ const AddEmployee = () => {
                 clearValues();
               }}
             >
-              clear
+              اعادة تعيين
             </button>
           </div>
         </div>

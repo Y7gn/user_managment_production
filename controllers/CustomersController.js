@@ -46,6 +46,7 @@ const createCustomer = async (req, res) => {
 };
 const getAllCustomers = async (req, res) => {
   const { customerstatus, searchname, phoneNumber, sort } = req.query;
+
   console.log(req.query);
   const queryObject = {
     // createdBy:req.user.userId
@@ -68,7 +69,10 @@ const getAllCustomers = async (req, res) => {
   }
   //NO AWAIT for sorting
   console.log(queryObject);
-  let result = Customer.find(queryObject);
+  let result = Customer.find(queryObject).populate(
+    "createdBy",
+    "-_id -isAdmin"
+  );
   if (sort === "latest") {
     result = result.sort("-createdAt");
   }
@@ -175,6 +179,9 @@ const showStatsCustomer = async (req, res) => {
     if (element._id == "عميل متردد") {
       element._id = "unsure";
     }
+    if (element._id == "عميل لم يوافق") {
+      element._id = "reject";
+    }
   });
   stats = stats.reduce((acc, curr) => {
     const { _id: title, count } = curr;
@@ -188,6 +195,7 @@ const showStatsCustomer = async (req, res) => {
     done: stats.done || 0,
     waiting: stats.waiting || 0,
     unsure: stats.unsure || 0,
+    reject: stats.reject || 0,
   };
 
   let monthlyApplications = await Customer.aggregate([

@@ -1,18 +1,37 @@
+import { useAppContext } from "../context/appContext";
+import { useState } from "react";
 const FormRowSelect = ({
   labelText,
   name,
   value,
-  handleChange,
+  // handleChange,
   list,
   optionsIsActivated,
   optionInputName,
   optionInputValue,
 }) => {
-  // const handleInputChange = () => {
-  //   console.log(optionInputName);
-  //   console.log(optionInputValue);
-  //   handleChange({ name: optionInputName, value: optionInputValue });
-  // };
+  const [showInputOption, setShowInputOption] = useState(
+    value !== list[list.length - 1] ? false : true
+  );
+
+  const { handleChange } = useAppContext();
+  const handleSelectionChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    console.log(`${name} : ${value}`);
+
+    handleChange({ name, value });
+    console.log(value);
+    console.log(list[list.length - 1]);
+    value === list[list.length - 1]
+      ? setShowInputOption(true)
+      : setShowInputOption(false);
+    console.log(showInputOption);
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    handleChange({ name, value });
+  };
   return (
     <div className="marginRow elementRow formRow">
       <label htmlFor={name} className="form-label">
@@ -22,7 +41,7 @@ const FormRowSelect = ({
       <select
         name={name}
         value={value}
-        onChange={handleChange}
+        onChange={handleSelectionChange}
         className="form-select choosebtn"
         style={{ color: "black" }}
       >
@@ -35,17 +54,17 @@ const FormRowSelect = ({
         })}
       </select>
 
-      {optionsIsActivated && (
+      {optionsIsActivated & (showInputOption === true) ? (
         <>
           <input
             type="text"
             value={optionInputValue}
             name={optionInputName}
-            onChange={handleChange}
+            onChange={handleInputChange}
             className="form-input other-input"
           />
         </>
-      )}
+      ) : null}
     </div>
   );
 };

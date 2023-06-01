@@ -132,7 +132,43 @@ const getCurrentUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user });
 };
 const getSingleUserCustomers = async (req, res) => {
-  const mycustomers = await Customer.find({ createdBy: req.user.userId });
+  const { customerstatus, searchname, phoneNumber, sort } = req.query;
+
+  // const mycustomers = await Customer.find({ createdBy: req.user.userId });
+  let queryObject = {
+    createdBy: req.user.userId,
+  };
+  console.log(req.query);
+
+  if (searchname) {
+    queryObject.customername = { $regex: searchname, $options: "i" };
+  }
+  if (phoneNumber) {
+    queryObject.phonenumber = { $regex: phoneNumber, $options: "i" };
+  }
+  if (customerstatus && customerstatus !== "الجميع") {
+    //add it to query object
+    queryObject.customerstatus = customerstatus;
+  }
+  let result = Customer.find(queryObject);
+  if (sort === "latest") {
+    result = result.sort("-createdAt");
+  }
+  if (sort === "oldest") {
+    result = result.sort("createdAt");
+  }
+  if (sort === "أ-ي") {
+    result = result
+      .collation({ locale: "ar", strength: 2 })
+      .sort("customername");
+  }
+  if (sort === "ي-أ") {
+    result = result
+      .collation({ locale: "ar", strength: 2 })
+      .sort("-customername");
+  }
+  const mycustomers = await result;
+
   res.status(StatusCodes.OK).json({ mycustomers });
 };
 const logoutUser = async (req, res) => {

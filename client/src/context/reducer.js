@@ -20,7 +20,6 @@ import {
   CREATE_EMPLOYEE_CUSTOMER_SUCCESS,
   CREATE_EMPLOYEE_CUSTOMER_ERROR,
   GET_JOBS_BEGIN,
-  GET_JOBS_SUCCESS,
   SET_EDIT_JOB,
   SET_EDIT_CUSTOMER,
   DELETE_CUSTOMER_BEGIN,
@@ -182,6 +181,7 @@ const reducer = (state, action) => {
       newcustomername: "",
       customername: "",
       phonenumber: "",
+      customerstatus: "الحسبة قيد الانتظار",
       newcustomerusername: "",
       newcustomerpassword: "",
       addEmployeeCheckBox: false,
@@ -194,6 +194,12 @@ const reducer = (state, action) => {
       financebank: "الاهلي",
       supportedornot: "مدعوم",
       excesscashcustomer: "قيد الانتظار",
+      customerStatusOptionsInput: "",
+      supportedornotOptionsInput: "",
+      companypercentageOptionsInput: "",
+      excesscashcustomerOptionsInput: "",
+      salarybankOptionsInput: "",
+      financebankOptionsInput: "",
       companypercentage: "",
       obligations: {
         personalloan: false,
@@ -320,6 +326,7 @@ const reducer = (state, action) => {
       buildingPlace,
     } = customerToEdit;
 
+    let customerStatusOptionsInput;
     let companypercentageOptionsInput;
     let excesscashcustomerOptionsInput;
     let supportedornotOptionsInput;
@@ -327,19 +334,21 @@ const reducer = (state, action) => {
     let financebankOptionsInput;
     let buildingPlaceOptionsInput;
 
+    let customerStatusEdited;
     let companypercentageEdited;
     let excesscashcustomerEdited;
     let supportedornotEdited;
     let salarybankEdited;
     let financebankEdited;
     let buildingPlaceEdited;
+    if (!state.customerstatusOptions.includes(customerstatus)) {
+      // if the value is kfdskfksd input
+      customerStatusOptionsInput = customerstatus; //fill the input
+      customerStatusEdited = "عميل لم يوافق"; // last index
+    }
     if (!state.companypercentageOptions.includes(companypercentage)) {
-      console.log("before");
-      console.log(state.companypercentage);
       companypercentageOptionsInput = companypercentage;
       companypercentageEdited = "other";
-      console.log("after");
-      console.log(state.companypercentage);
     }
     if (!state.excesscashcustomerOptions.includes(excesscashcustomer)) {
       excesscashcustomerEdited = "other";
@@ -373,7 +382,8 @@ const reducer = (state, action) => {
       customername,
       phonenumber,
 
-      customerstatus,
+      customerstatus: customerStatusEdited,
+      customerStatusOptionsInput,
 
       companypercentage: companypercentageEdited,
       companypercentageOptionsInput,
@@ -455,9 +465,9 @@ const reducer = (state, action) => {
   if (action.type === CLEAR_FILTERS) {
     return {
       ...state,
-      search: "",
-      searchStatus: "all",
-      searchType: "all",
+      searchname: "",
+      searchphoneNumber: "",
+      searchCustomerStatus: "",
       sort: "latest",
     };
   }

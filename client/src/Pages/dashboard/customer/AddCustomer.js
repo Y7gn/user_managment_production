@@ -29,6 +29,7 @@ const AllCustomer = () => {
 
     customerstatus,
     customerstatusOptions,
+    customerStatusOptionsInput,
 
     companypercentage,
     companypercentageOptions,
@@ -68,7 +69,17 @@ const AllCustomer = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!customername || !customerstatus) {
+    if (
+      !customername ||
+      !customerstatus ||
+      !customerStatusOptionsInput ||
+      !companypercentageOptionsInput ||
+      !excesscashcustomerOptionsInput ||
+      !supportedornotOptionsInput ||
+      !salarybankOptionsInput ||
+      !financebankOptionsInput ||
+      !buildingPlaceOptionsInput
+    ) {
       displayAlert();
       return;
     }
@@ -141,15 +152,15 @@ const AllCustomer = () => {
           <FormRowSelect
             name="customerstatus"
             value={customerstatus}
-            handleChange={handleJobInput}
             list={customerstatusOptions}
-            optionsIsActivated={false}
+            optionsIsActivated={true}
+            optionInputName="customerStatusOptionsInput"
+            optionInputValue={customerStatusOptionsInput}
             labelText="حالة العميل:"
           />
           <FormRowSelect
             name="companypercentage"
             value={companypercentage}
-            handleChange={handleJobInput}
             list={companypercentageOptions}
             optionsIsActivated={true}
             labelText="نسبة الشركة:"
@@ -159,7 +170,6 @@ const AllCustomer = () => {
           <FormRowSelect
             name="excesscashcustomer"
             value={excesscashcustomer}
-            handleChange={handleJobInput}
             list={excesscashcustomerOptions}
             optionsIsActivated={true}
             labelText="الفائض الكاش للعميل:"
@@ -169,7 +179,6 @@ const AllCustomer = () => {
           <FormRowSelect
             name="supportedornot"
             value={supportedornot}
-            handleChange={handleJobInput}
             list={supportedornotOptions}
             optionsIsActivated={true}
             labelText="مدعوم او غير مدعوم:"
@@ -179,7 +188,6 @@ const AllCustomer = () => {
           <FormRowSelect
             name="salarybank"
             value={salarybank}
-            handleChange={handleJobInput}
             list={salarybankOptions}
             optionsIsActivated={true}
             labelText="بنك الراتب:"
@@ -189,7 +197,6 @@ const AllCustomer = () => {
           <FormRowSelect
             name="financebank"
             value={financebank}
-            handleChange={handleJobInput}
             list={financebankOptions}
             optionsIsActivated={true}
             labelText="بنك التمويل:"
@@ -200,7 +207,6 @@ const AllCustomer = () => {
           <FormRowSelect
             name="buildingPlace"
             value={buildingPlace}
-            handleChange={handleJobInput}
             list={buildingPlaceOptions}
             optionsIsActivated={true}
             labelText="موقع البناء:"
@@ -278,7 +284,7 @@ const AllCustomer = () => {
               onClick={handleSubmit}
               disabled={isLoading}
             >
-              submit
+              تاكيد
             </button>
             <button
               className="btn btn-block clear-btn"
@@ -287,7 +293,7 @@ const AllCustomer = () => {
                 clearValues();
               }}
             >
-              clear
+              اعادة تعيين
             </button>
           </div>
         </div>

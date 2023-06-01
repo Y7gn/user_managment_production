@@ -25,6 +25,8 @@ const CustomerSchema = new mongoose.Schema(
       //   "الحسبة قيد الانتظار",
       //   "عميل متردد",
       //   "عميل لم يوافق",
+
+      // عميل لم يرد
       // ],
       // enum: ["done", "waiting", "refused", "unsure"],
       // default: "waiting customer",

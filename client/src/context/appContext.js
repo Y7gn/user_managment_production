@@ -66,6 +66,7 @@ const initialState = {
     "عميل تم الانجاز",
     "الحسبة قيد الانتظار",
     "عميل متردد",
+    "عميل لم يرد",
     "عميل لم يوافق",
   ],
   companypercentageOptions: ["قيد الانتظار", "other"],
@@ -84,6 +85,7 @@ const initialState = {
   buildingPlaceOptions: ["قيد الانتظار", "نجران", "القويقعه", "تربه", "other"],
 
   customerstatus: "الحسبة قيد الانتظار",
+  customerStatusOptionsInput: "",
 
   companypercentage: "",
   companypercentageOptionsInput: "",
@@ -298,6 +300,7 @@ const AppProvider = ({ children }) => {
         phonenumber,
 
         customerstatus,
+        customerStatusOptionsInput,
 
         companypercentage,
         companypercentageOptionsInput,
@@ -326,8 +329,8 @@ const AppProvider = ({ children }) => {
         salarybankResult,
         financebankResult,
         buildingPlaceResult;
-      if (customerstatus === "other") {
-        customerstatusResult = companypercentageOptionsInput;
+      if (customerstatus === "عميل لم يوافق") {
+        customerstatusResult = customerStatusOptionsInput;
       } else {
         customerstatusResult = customerstatus;
       }
@@ -585,11 +588,24 @@ const AppProvider = ({ children }) => {
     clearAlert();
   };
   const getMyCustomers = async () => {
+    const {
+      page,
+      search,
+      searchCustomerStatus,
+      searchname,
+      searchphoneNumber,
+      sort,
+    } = state;
+    console.log(searchCustomerStatus);
     dispatch({ type: GET_JOBS_BEGIN });
+
+    let url = `/auth/getSingleUserCustomers?customerstatus=${searchCustomerStatus}&searchname=${searchname}&phoneNumber=${searchphoneNumber}&sort=${sort}`;
+
     try {
-      const { data } = await authFetch(`/auth/getSingleUserCustomers`);
+      const { data } = await authFetch(url);
       const { mycustomers } = data;
-      // console.log(mycustomers);
+      console.log(url);
+      console.log(mycustomers);
       dispatch({
         type: GET_MY_CUSTOMER_SUCCESS,
         payload: { mycustomers },
@@ -715,10 +731,6 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CHANGE_PAGE, payload: { page } });
   };
   const getCurrentUser = async () => {
-    console.log("getCurrentUser");
-    console.log("getCurrentUser");
-    console.log("getCurrentUser");
-    console.log("getCurrentUser");
     dispatch({ type: GET_CURRENT_USER_BEGIN });
     try {
       const { data } = await authFetch("/auth/getCurrentUser");

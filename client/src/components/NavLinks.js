@@ -22,7 +22,7 @@ const NavLinks = ({ ToggleSideBar }) => {
     },
     {
       id: 2,
-      text: "employee",
+      text: "الموظفين",
       // path: "all-jobs",
       path: ["add-employee", "all-employee"],
       icon: <MdQueryStats />,

@@ -7,8 +7,6 @@ const AllEmployee = () => {
   if (userLoading) return <Loading />;
 
   if (!user.permissions.showAllEmployee) {
-    console.log("showAllEmployee");
-
     return <Navigate to="/" />;
   }
   return (

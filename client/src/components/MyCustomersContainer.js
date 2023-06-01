@@ -10,6 +10,10 @@ const MyCustomersContainer = () => {
     getMyCustomers,
     mycustomers,
     isLoading,
+    searchCustomerStatus,
+    searchname,
+    searchphoneNumber,
+    sort,
     // totalCustomers,
     // search,
     // searchStatus,
@@ -21,7 +25,7 @@ const MyCustomersContainer = () => {
 
   useEffect(() => {
     getMyCustomers();
-  }, []);
+  }, [searchCustomerStatus, searchname, searchphoneNumber, sort]);
   //   search, searchStatus, searchType, sort, page
   if (isLoading) {
     return <Loading center />;
@@ -30,7 +34,7 @@ const MyCustomersContainer = () => {
   if (mycustomers.length === 0) {
     return (
       <Wrapper>
-        <h2>No customers to display..</h2>
+        <h2>لايوجد عملاء قيد العرض..</h2>
       </Wrapper>
     );
   }

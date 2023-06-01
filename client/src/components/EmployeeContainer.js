@@ -9,28 +9,6 @@ const EmployeeContainer = () => {
   const { getEmployee, isLoading, totalJobs, numOfPages, page, employees } =
     useAppContext();
 
-  // let Employeess = [
-  //   {
-  //     _id: 0,
-
-  //     position: "myPOSITION0",
-  //     company: "mycompany0",
-  //     jobLocation: "mylocation0",
-  //   },
-  //   {
-  //     _id: 1,
-
-  //     position: "myPOSITION1",
-  //     company: "mycompany1",
-  //     jobLocation: "mylocation1",
-  //   },
-  //   {
-  //     _id: 2,
-  //     position: "myPOSITION2",
-  //     company: "mycompany2",
-  //     jobLocation: "mylocation2",
-  //   },
-  // ];
   useEffect(() => {
     getEmployee();
     // eslint-disable-next-line
@@ -43,7 +21,7 @@ const EmployeeContainer = () => {
   if (employees.length === 0) {
     return (
       <Wrapper>
-        <h2>No Jobs to display..</h2>
+        <h2>لم يتم العثور على موظفين..</h2>
       </Wrapper>
     );
   }
