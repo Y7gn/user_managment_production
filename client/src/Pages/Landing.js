@@ -16,17 +16,11 @@ const Landing = () => {
           {/* info */}
           <div className="info">
             <h1>
-              job <span>tracking</span> app
+              موقع <span>التحكم</span> بالمستخدمين
             </h1>
-            <p>
-              I'm baby bushwick green juice echo park raw denim chartreuse
-              hashtag kombucha brunch pop-up. Affogato cray master cleanse
-              thundercats lo-fi pitchfork gochujang. Polaroid twee helvetica
-              hella chillwave ramps master cleanse truffaut photo booth bushwick
-              listicle.
-            </p>
+            <p>موقع خدمة العملاء يتيح للموظفين التحكم الكامل بالعملاء.</p>
             <Link to="/register" className="btn btn-hero">
-              Login/Register
+              تسجيل الدخول
             </Link>
           </div>
 

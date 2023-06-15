@@ -9,7 +9,7 @@ const ChartsContainer = () => {
   const { monthlyApplications: data } = useAppContext();
   return (
     <Wrapper>
-      <h5>Monthly Applications</h5>
+      <h5>العمليات الشهرية</h5>
       <button
         type="button"
         onClick={() => setBarChart(!barChart)}

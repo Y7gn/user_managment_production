@@ -1,62 +1,65 @@
-import { useState, useEffect } from 'react';
-import { Logo,FormRow, Alert } from '../components'
-import Wrapper from '../assets/wrappers/RegisterPage';
-import { useAppContext } from '../context/appContext';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Logo, FormRow, Alert } from "../components";
+import Wrapper from "../assets/wrappers/RegisterPage";
+import { useAppContext } from "../context/appContext";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
-  username:"",
+  username: "",
   // email:"",
-  password:"",
+  password: "",
   showAlert: false,
-}
+};
 
 const Register = () => {
-  const navigate = useNavigate()
-  const [values,setValues] = useState(initialState)
-  const { user, isLoading, showAlert, displayAlert,registerUser,loginUser} = useAppContext()
+  const navigate = useNavigate();
+  const [values, setValues] = useState(initialState);
+  const { user, isLoading, showAlert, displayAlert, registerUser, loginUser } =
+    useAppContext();
 
   // const state = useAppContext()
   // console.log(state);
-  
-  const handleChange = (e) =>{
-    // console.log(e.target);
-    setValues({...values, [e.target.name]: e.target.value})
-  }
 
-  const onSubmit = (e) =>{
+  const handleChange = (e) => {
+    // console.log(e.target);
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = (e) => {
     e.preventDefault();
-    
+
     // console.log(e.target.values);
-    const { username, password } = values
+    const { username, password } = values;
     console.log(username);
-    if(!username || !password ) {
-      displayAlert()
-      return
+    if (!username || !password) {
+      displayAlert();
+      return;
     }
-    const currentUser = {username,password}
+    const currentUser = { username, password };
     // if(isMember){
-      loginUser(currentUser)
+    loginUser(currentUser);
     // }else{
-      // registerUser(currentUser)
+    // registerUser(currentUser)
     // }
     // console.log(values);
-  }
+  };
 
-  useEffect(()=>{
-    if(user){
-      setTimeout(()=>{
-        navigate('/')
-      },1000)
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     }
-  },[user,navigate])
+  }, [user, navigate]);
   return (
-    <Wrapper className='full-page'>
+    <Wrapper className="full-page">
       <form className="form" onSubmit={onSubmit}>
         {/* <Logo /> */}
-        <h3>Login</h3>
-        <h1><Alert/></h1>
-        {values.showAlert && <Alert/>}
+        <h3>تسجيل الدخول</h3>
+        <h1>
+          <Alert />
+        </h1>
+        {values.showAlert && <Alert />}
         {/* name input */}
 
         {/* {
@@ -69,12 +72,12 @@ const Register = () => {
             />
           )
         } */}
-        
+
         {/* email input */}
-        <FormRow 
+        <FormRow
           labelText="اسم المستخدم"
-          type='text'
-          name='username'
+          type="text"
+          name="username"
           value={values.username}
           handleChange={handleChange}
         />
@@ -86,15 +89,15 @@ const Register = () => {
         /> */}
         {/* password input */}
 
-        <FormRow 
+        <FormRow
           labelText="كلمة المرور"
-          type='password'
-          name='password'
+          type="password"
+          name="password"
           value={values.password}
           handleChange={handleChange}
         />
-        <button type='submit' className='btn btn-block' disabled={isLoading}>
-          submit
+        <button type="submit" className="btn btn-block" disabled={isLoading}>
+          ارسال
         </button>
 
         {/* <p>
@@ -105,7 +108,7 @@ const Register = () => {
         </p> */}
       </form>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

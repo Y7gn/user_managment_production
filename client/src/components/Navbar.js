@@ -30,7 +30,7 @@ export const Navbar = () => {
 
           <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
             <button type="button" className="dropdown-btn" onClick={logoutUser}>
-              logout
+              تسحيل الخروج
             </button>
           </div>
         </div>

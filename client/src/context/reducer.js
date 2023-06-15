@@ -70,6 +70,7 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       alertText: "User Created! Redirecting..",
+      alertText: "تم الانشاء! .. يتم التحويل",
     };
   }
   if (action.type === REGISTER_USER_ERROR) {
@@ -94,6 +95,7 @@ const reducer = (state, action) => {
       showAlert: true,
       alertType: "success",
       alertText: "Login Successful! Redirecting..",
+      alertText: "تم تسجيل الدخول بنجاح! يتم التحويل ..",
     };
   }
   if (action.type === LOGIN_USER_ERROR) {
@@ -130,7 +132,7 @@ const reducer = (state, action) => {
       userLocation: action.payload.location,
       showAlert: true,
       alertType: "success",
-      alertText: "User Profile Updated!",
+      alertText: "تم التحديث !",
     };
   }
   if (action.type === UPDATE_USER_ERROR) {
