@@ -3,7 +3,7 @@ import { FormRow, FormRowSelect } from ".";
 import Wrapper from "../assets/wrappers/SearchContainer";
 import { useAppContext } from "../context/appContext";
 
-const SearchContainer = () => {
+const SearchContainer = ({ name }) => {
   const [localSearch, setLocalSearch] = useState("");
   const {
     isLoading,
@@ -15,6 +15,8 @@ const SearchContainer = () => {
     customerstatusOptions,
     handleChange,
     clearFilters,
+    searchEmployee,
+    employees,
   } = useAppContext();
 
   const handleSearch = (e) => {
@@ -23,6 +25,7 @@ const SearchContainer = () => {
     console.log(e.target.value);
     handleChange({ name: e.target.name, value: e.target.value });
   };
+  const employeeOptions = employees.map((obj) => obj.name);
   const handleSubmit = (e) => {
     e.preventDefault();
     setLocalSearch("");
@@ -73,6 +76,15 @@ const SearchContainer = () => {
             handleChange={handleSearch}
             list={["الجميع", ...customerstatusOptions]}
           />
+          {name === "AllCustomers" && (
+            <FormRowSelect
+              labelText="اسم الموظف:"
+              name="searchEmployee"
+              value={searchEmployee}
+              handleChange={handleSearch}
+              list={["الجميع", ...employeeOptions]}
+            />
+          )}
 
           <FormRowSelect
             name="sort"
@@ -86,7 +98,7 @@ const SearchContainer = () => {
             disabled={isLoading}
             onClick={handleSubmit}
           >
-            clear filters
+            اعادة التعيين
           </button>
         </div>
       </form>

@@ -9,6 +9,7 @@ const FormRowSelect = ({
   optionsIsActivated,
   optionInputName,
   optionInputValue,
+  displayAlert,
 }) => {
   const [showInputOption, setShowInputOption] = useState(
     value !== list[list.length - 1] ? false : true
@@ -18,11 +19,11 @@ const FormRowSelect = ({
   const handleSelectionChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    console.log(`${name} : ${value}`);
+    // console.log(`${name} : ${value}`);
 
     handleChange({ name, value });
-    console.log(value);
-    console.log(list[list.length - 1]);
+    // console.log(value);
+    // console.log(list[list.length - 1]);
     value === list[list.length - 1]
       ? setShowInputOption(true)
       : setShowInputOption(false);

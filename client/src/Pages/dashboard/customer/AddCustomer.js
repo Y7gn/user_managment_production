@@ -71,14 +71,14 @@ const AllCustomer = () => {
 
     if (
       !customername ||
-      !customerstatus ||
-      !customerStatusOptionsInput ||
-      !companypercentageOptionsInput ||
-      !excesscashcustomerOptionsInput ||
-      !supportedornotOptionsInput ||
-      !salarybankOptionsInput ||
-      !financebankOptionsInput ||
-      !buildingPlaceOptionsInput
+      !phonenumber ||
+      (customerstatus === "عميل لم يوافق" && !customerStatusOptionsInput) ||
+      (companypercentage === "other" && !companypercentageOptionsInput) ||
+      (excesscashcustomer === "other" && !excesscashcustomerOptionsInput) ||
+      (supportedornot === "other" && !supportedornotOptionsInput) ||
+      (salarybank === "other" && !salarybankOptionsInput) ||
+      (financebank === "other" && !financebankOptionsInput) ||
+      (buildingPlace === "other" && !buildingPlaceOptionsInput)
     ) {
       displayAlert();
       return;
@@ -91,7 +91,6 @@ const AllCustomer = () => {
     createCustomer();
     getCustomers();
     getMyCustomers();
-    console.log("create customer");
   };
 
   const handleChangeCheckBox = (e) => {
@@ -215,8 +214,8 @@ const AllCustomer = () => {
           />
 
           <div
-            className="marginRow formRow"
-            style={{ display: "flex", alignItems: "end" }}
+            className="marginRow formRow checkboxes"
+            style={{ display: "flex" }}
           >
             <label
               htmlFor="obligations"

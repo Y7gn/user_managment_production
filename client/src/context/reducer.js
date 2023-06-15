@@ -46,7 +46,7 @@ const reducer = (state, action) => {
       ...state,
       showAlert: true,
       alertType: "danger",
-      alertText: "Please provide all values!",
+      alertText: "الرجاء تعبئة المدخلات ",
     };
   }
   if (action.type === CLEAR_ALERT) {
@@ -67,7 +67,6 @@ const reducer = (state, action) => {
       // token:action.payload.token,
       user: action.payload.user,
       userLocation: action.payload.location,
-      jobLocation: action.payload.location,
       showAlert: true,
       alertType: "success",
       alertText: "User Created! Redirecting..",
@@ -92,7 +91,6 @@ const reducer = (state, action) => {
       // token:action.payload.token,
       user: action.payload.user,
       userLocation: action.payload.location,
-      jobLocation: action.payload.location,
       showAlert: true,
       alertType: "success",
       alertText: "Login Successful! Redirecting..",
@@ -117,10 +115,6 @@ const reducer = (state, action) => {
     return {
       ...initialState,
       userLoading: false,
-      // user:null,
-      // token:null,
-      // jobLocation:'',
-      // userLocation:'',
     };
   }
 
@@ -134,7 +128,6 @@ const reducer = (state, action) => {
       // token:action.payload.token,
       user: action.payload.user,
       userLocation: action.payload.location,
-      jobLocation: action.payload.location,
       showAlert: true,
       alertType: "success",
       alertText: "User Profile Updated!",
@@ -174,7 +167,6 @@ const reducer = (state, action) => {
       editEmployeeId: "",
       position: "",
       company: "",
-      jobLocation: state.userLocation,
       jobTypeOptions: ["full-time", "part-time", "remote", "internship"],
       statusOptions: ["interview", "declined", "pending"],
 
@@ -491,7 +483,6 @@ const reducer = (state, action) => {
       showAlert: true,
       user: action.payload.user,
       userLocation: action.payload.location,
-      jobLocation: action.payload.location,
     };
   }
   throw new Error(`no such action: ${action.type}`);

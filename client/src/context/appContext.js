@@ -87,7 +87,7 @@ const initialState = {
   customerstatus: "الحسبة قيد الانتظار",
   customerStatusOptionsInput: "",
 
-  companypercentage: "",
+  companypercentage: "قيد الانتظار",
   companypercentageOptionsInput: "",
 
   excesscashcustomer: "قيد الانتظار",
@@ -111,7 +111,7 @@ const initialState = {
     nayifat: false,
     other: "",
   },
-  buildingPlace: "",
+  buildingPlace: "قيد الانتظار",
   buildingPlaceOptionsInput: "",
 
   employees: [],
@@ -131,7 +131,8 @@ const initialState = {
   sort: "latest",
   // sortOptions: ["latest", "oldest", "a-z", "z-a"],
   sortOptionsAr: ["الاحدث", "الاقدم", "أ-ي", "ي-أ"],
-
+  EmployeeOptions: "",
+  searchEmployee: "",
   //permissions
   permissions: "",
   newcustomername: "",
@@ -568,9 +569,9 @@ const AppProvider = ({ children }) => {
       searchname,
       searchphoneNumber,
       sort,
+      searchEmployee,
     } = state;
-    console.log(searchCustomerStatus);
-    let url = `/customer?customerstatus=${searchCustomerStatus}&searchname=${searchname}&phoneNumber=${searchphoneNumber}&sort=${sort}`;
+    let url = `/customer?customerstatus=${searchCustomerStatus}&searchname=${searchname}&phoneNumber=${searchphoneNumber}&sort=${sort}&searchEmployee=${searchEmployee}`;
     dispatch({ type: GET_JOBS_BEGIN });
     console.log(url);
     try {
@@ -745,6 +746,7 @@ const AppProvider = ({ children }) => {
   useEffect(() => {
     getCurrentUser();
     getMyCustomers();
+    getEmployee();
   }, []);
 
   return (

@@ -5,15 +5,7 @@ import { useAppContext } from "../context/appContext";
 import Wrapper from "../assets/wrappers/Customer";
 import JobInfo from "./JobInfo";
 
-const Employee = ({
-  _id,
-  name,
-  username,
-  //   jobLocation,
-  //   createdAt,
-  //   status,
-  //   jobType,
-}) => {
+const Employee = ({ _id, name, username }) => {
   const { setEditEmployee, deleteEmployee } = useAppContext();
 
   //   let date = moment(createdAt);
@@ -26,7 +18,7 @@ const Employee = ({
         <div className="infoEmployee">
           <div className="main-icon">{name.charAt(0)}</div>
           <div className="allemployeeinfo">
-            <h5>{_id}</h5>
+            <h5 className="idEmployee">{_id}</h5>
             <h5>{username}</h5>
             <p>{name}</p>
           </div>

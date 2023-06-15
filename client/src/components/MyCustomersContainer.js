@@ -30,7 +30,6 @@ const MyCustomersContainer = () => {
   if (isLoading) {
     return <Loading center />;
   }
-
   if (mycustomers.length === 0) {
     return (
       <Wrapper>

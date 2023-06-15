@@ -43,7 +43,7 @@ const Wrapper = styled.section`
   //check
   .containerchecks {
     display: inline-flex;
-    margin-right: 20px;
+    /* margin-right: 20px; */
     cursor: pointer;
     font-size: 1.1rem;
     user-select: none;
@@ -123,16 +123,15 @@ const Wrapper = styled.section`
     button {
       height: 35px;
     }
+    flex-direction: column;
   }
   .submit-btn {
-    width: 15%;
-    margin-left: 1rem;
-    /* background-color: rgba(17, 101, 20, 0.76); */
+    width: 100%;
     background: var(--green-dark);
     color: white;
   }
   .choosebtn {
-    width: 15%;
+    width: 100%;
   }
 
   .other-input {
@@ -142,9 +141,12 @@ const Wrapper = styled.section`
   .other-multiple {
     margin-right: 1rem;
   }
+  .checkboxes {
+    flex-direction: column;
+    flex-direction: start;
+  }
   .clear-btn {
-    width: 15%;
-    margin-left: 1rem;
+    /* width: 100%; */
     background-color: var(--red-dark);
   }
   .addfirstdiv {
@@ -163,10 +165,26 @@ const Wrapper = styled.section`
       align-items: center;
       column-gap: 1rem;
     }
+    .choosebtn {
+      width: 15%;
+    }
+    .checkboxes {
+      flex-direction: row;
+      align-items: end;
+    }
     .btn-container {
       margin-top: 0;
       margin-top: 2rem;
+      flex-direction: row;
       /* width: 30%; */
+    }
+    .clear-btn,
+    .submit-btn {
+      width: 12rem;
+      margin-left: 1rem;
+    }
+    .containerchecks {
+      margin-right: 20px;
     }
   }
   @media (min-width: 1120px) {

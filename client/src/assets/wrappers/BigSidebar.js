@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const Wrapper = styled.aside`
   display: none;
+
   @media (min-width: 992px) {
     display: block;
     box-shadow: 1px 0px 0px 0px rgba(0, 0, 0, 0.1);
@@ -35,8 +36,7 @@ const Wrapper = styled.aside`
     .nav-item {
       display: flex;
       width: 100%;
-      justifycontent: "center";
-      /* alignItems:"center" */
+      justify-content: "center";
     }
     .nav-item:first {
       display: flex;

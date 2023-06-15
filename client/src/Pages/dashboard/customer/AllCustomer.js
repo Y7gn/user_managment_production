@@ -13,7 +13,7 @@ const AllCustomer = () => {
   }
   return (
     <>
-      <SearchContainer />
+      <SearchContainer name={"AllCustomers"} />
       <CustomersContainer />
     </>
   );

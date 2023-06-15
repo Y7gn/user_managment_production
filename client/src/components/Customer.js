@@ -19,8 +19,13 @@ const Customer = ({
   createdAt,
   noCreator,
 }) => {
-  const { setEditCustomer, deleteCustomer, mycustomers, user } =
-    useAppContext();
+  const {
+    setEditCustomer,
+    deleteCustomer,
+    mycustomers,
+    user,
+    customerstatusOptions,
+  } = useAppContext();
 
   let date = moment(createdAt);
   date = date.format("MM Do, YYYY");
@@ -37,21 +42,14 @@ const Customer = ({
   const isItAllowed =
     mycustomers.filter((element) => element._id === _id).length === 1 ||
     user.permissions.editAndDeleteCustomer;
-  console.log(isItAllowed);
-  // if (
-  //   mycustomers.filter((element) => element._id === _id).length === 1 ||
-  //   user.permissions.editAndDeleteCustomer === true
-  // ) {
-  //   console.log("you can edit and delete");
-  // } else {
-  //   console.log("you can't edit or delete");
-  // }
+  // console.log("noCreator");
+  // console.log(noCreator);
   return (
     <Wrapper>
       <header>
         <div className="main-icon">{customername.charAt(0)}</div>
         <div className="info">
-          <div>
+          <div className="custInfo">
             <h5>{customername}</h5>
             <p>{phonenumber}</p>
           </div>
@@ -90,11 +88,18 @@ const Customer = ({
           {!noCreator && (
             <JobInfo
               icon={<FaBriefcase />}
-              text={"بواسطة: " + (createdBy?.name || "غير معرف")}
+              text={
+                "بواسطة: " +
+                (createdBy && createdBy.name ? createdBy.name : "غير معرف")
+              }
             />
           )}
           {/* <JobInfo icon={<FaBriefcase />} text={obligations} /> */}
-          <div className={`status ${customerTheme}`}>{customerstatus}</div>
+          <div className={`status ${customerTheme}`}>
+            {customerstatusOptions.includes(customerstatus)
+              ? customerstatus
+              : "عميل لم يوافق"}
+          </div>
           {/* <div className={`status ${customerstatus}`}>{customerstatus}</div> */}
         </div>
         <footer></footer>

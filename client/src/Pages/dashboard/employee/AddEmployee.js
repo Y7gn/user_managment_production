@@ -21,11 +21,7 @@ const AddEmployee = () => {
     addCustomerCheckBox,
     allCustomersCheckBox,
     editDeleteCustomerCheckBox,
-    // jobLocation,
-    // jobType,
-    // jobTypeOptions,
-    // status,
-    // statusOptions,
+
     handleChange,
     clearValues,
     createEmployee,

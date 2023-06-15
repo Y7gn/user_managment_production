@@ -15,15 +15,23 @@ const CustomersContainer = () => {
     searchphoneNumber,
     searchCustomerStatus,
     sort,
-
+    searchEmployee,
+    getEmployee,
     // numOfPages,
     // page,
   } = useAppContext();
 
   useEffect(() => {
+    // getEmployee();
     getCustomers();
     // eslint-disable-next-line
-  }, [searchCustomerStatus, searchname, searchphoneNumber, sort]);
+  }, [
+    searchCustomerStatus,
+    searchname,
+    searchphoneNumber,
+    sort,
+    searchEmployee,
+  ]);
   // search, searchStatus, searchType, sort, page
   if (isLoading) {
     return <Loading center />;

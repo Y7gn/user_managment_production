@@ -3,7 +3,7 @@ import { MyCustomersContainer, SearchContainer } from "../../../components";
 const MyCustomers = () => {
   return (
     <>
-      <SearchContainer />
+      <SearchContainer name={"MyCustomers"} />
       <MyCustomersContainer />
     </>
   );

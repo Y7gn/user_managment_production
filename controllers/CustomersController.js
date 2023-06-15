@@ -23,8 +23,6 @@ const createCustomer = async (req, res) => {
     buildingPlace,
   } = req.body;
 
-  console.log("customerstatus  is :" + customerstatus);
-  console.log("companypercentage  is :" + companypercentage);
   if (!customername) {
     throw new BadRequestError("Please provide all values");
   }
@@ -45,7 +43,8 @@ const createCustomer = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ customer });
 };
 const getAllCustomers = async (req, res) => {
-  const { customerstatus, searchname, phoneNumber, sort } = req.query;
+  const { customerstatus, searchname, phoneNumber, sort, searchEmployee } =
+    req.query;
 
   console.log(req.query);
   const queryObject = {
@@ -58,9 +57,17 @@ const getAllCustomers = async (req, res) => {
     //add it to query object
     queryObject.customerstatus = customerstatus;
   }
+
+  if (searchEmployee && searchEmployee !== "الجميع") {
+    const employee = await User.findOne({ name: searchEmployee });
+    if (employee) {
+      queryObject.createdBy = employee._id;
+    }
+  }
   // if (jobType !== 'all') {
   //     queryObject.jobType = jobType;
   // }
+
   if (searchname) {
     queryObject.customername = { $regex: searchname, $options: "i" };
   }
