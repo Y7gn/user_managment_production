@@ -10,7 +10,12 @@ import { useAppContext } from "../context/appContext";
 import { useEffect } from "react";
 const NavLinks = ({ ToggleSideBar }) => {
   const { user } = useAppContext();
-  // console.log(user.permissions);
+  console.log(user.permissions);
+  let mypath = [
+    user.permissions?.addEmployee ? "add-employee" : undefined,
+    user.permissions?.showAllEmployee ? "all-employee" : null,
+  ].filter(Boolean);
+  console.log(mypath);
   const links = [
     {
       id: 1,
@@ -23,8 +28,10 @@ const NavLinks = ({ ToggleSideBar }) => {
     {
       id: 2,
       text: "الموظفين",
-      // path: "all-jobs",
-      path: ["add-employee", "all-employee"],
+      path: [
+        user.permissions?.addEmployee ? "add-employee" : undefined,
+        user.permissions?.showAllEmployee ? "all-employee" : null,
+      ].filter(Boolean),
       icon: <MdQueryStats />,
       menuItems: [
         {
@@ -44,7 +51,11 @@ const NavLinks = ({ ToggleSideBar }) => {
       id: 3,
       text: "العملاء",
       // path: "add-job",
-      path: ["add-customer", "emp-customers", "all-customers"],
+      path: [
+        user.permissions?.addCustomer ? "add-customer" : null,
+        "emp-customers",
+        user.permissions?.showAllCustomers ? "all-customers" : null,
+      ].filter(Boolean),
       icon: <FaWpforms />,
       menuItems: [
         {

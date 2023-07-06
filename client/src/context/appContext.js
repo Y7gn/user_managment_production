@@ -710,7 +710,7 @@ const AppProvider = ({ children }) => {
     try {
       //by default authFetch will be get request if not specified
       const { data } = await authFetch("/customer/stats");
-      console.log(data);
+      // console.log(data);
       dispatch({
         type: SHOW_STATS_SUCCESS,
         payload: {
@@ -735,7 +735,10 @@ const AppProvider = ({ children }) => {
     dispatch({ type: GET_CURRENT_USER_BEGIN });
     try {
       const { data } = await authFetch("/auth/getCurrentUser");
+
       const { user, location } = data;
+      console.log("user");
+      console.log(user);
       dispatch({ type: GET_CURRENT_USER_SUCCESS, payload: { user, location } });
     } catch (error) {
       if (error.response.status === 401) return;

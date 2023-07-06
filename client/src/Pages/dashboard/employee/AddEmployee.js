@@ -59,9 +59,9 @@ const AddEmployee = () => {
     handleChange({ name, value });
   };
   if (userLoading) return <Loading />;
-  if (!user.permissions.addEmployee) {
+  if (user.isAdmin === false && !user.permissions.addEmployee) {
     console.log("add Employee");
-    return <Navigate to="/" />;
+    return <Navigate to=".." />;
   }
   return (
     <Wrapper>

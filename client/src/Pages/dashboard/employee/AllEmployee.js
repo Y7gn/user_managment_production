@@ -6,7 +6,8 @@ const AllEmployee = () => {
   const { user, userLoading } = useAppContext();
   if (userLoading) return <Loading />;
 
-  if (!user.permissions.showAllEmployee) {
+  if (user.isAdmin === false && !user.permissions.showAllEmployee) {
+    // if is not admin , and if doesn't have permission return
     return <Navigate to="/" />;
   }
   return (

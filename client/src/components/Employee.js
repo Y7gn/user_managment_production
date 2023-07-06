@@ -6,7 +6,7 @@ import Wrapper from "../assets/wrappers/Customer";
 import JobInfo from "./JobInfo";
 
 const Employee = ({ _id, name, username }) => {
-  const { setEditEmployee, deleteEmployee } = useAppContext();
+  const { setEditEmployee, deleteEmployee, user } = useAppContext();
 
   //   let date = moment(createdAt);
   //   date = date.format("MM Do, YYYY");
@@ -32,22 +32,26 @@ const Employee = ({ _id, name, username }) => {
         </div> */}
         {/* <footer> */}
         <div className="actionsEmployee">
-          <Link
-            className="btn employeeedit-btn"
-            to="/add-employee"
-            onClick={() => setEditEmployee(_id)}
-          >
-            تعديل
-          </Link>
-          <button
-            className="btn employeedelete-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              deleteEmployee(_id);
-            }}
-          >
-            حذف
-          </button>
+          {user.permissions.editAndDeleteEmployee && (
+            <Link
+              className="btn employeeedit-btn"
+              to="/add-employee"
+              onClick={() => setEditEmployee(_id)}
+            >
+              تعديل
+            </Link>
+          )}
+          {user.permissions.editAndDeleteEmployee && (
+            <button
+              className="btn employeedelete-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                deleteEmployee(_id);
+              }}
+            >
+              حذف
+            </button>
+          )}
         </div>
         {/* </footer> */}
       </div>

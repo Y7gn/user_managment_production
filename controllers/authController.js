@@ -21,14 +21,15 @@ const CreateUser = async (req, res) => {
     username,
     name,
     password,
-    permissions: {
-      addCustomer: req.body.addCustomerCheckBox,
-      editAndDeleteCustomer: req.body.editDeleteEmployeeCheckBox,
-      showAllCustomers: req.body.allCustomersCheckBox,
-      addEmployee: req.body.addEmployeeCheckBox,
-      editAndDeleteEmployee: req.body.editDeleteEmployeeCheckBox,
-      showAllEmployee: req.body.allEmployeeCheckBox,
-    },
+    permissions,
+    // permissions: {
+    //   addCustomer: req.body.addCustomerCheckBox,
+    //   editAndDeleteCustomer: req.body.editDeleteEmployeeCheckBox,
+    //   showAllCustomers: req.body.allCustomersCheckBox,
+    //   addEmployee: req.body.addEmployeeCheckBox,
+    //   editAndDeleteEmployee: req.body.editDeleteEmployeeCheckBox,
+    //   showAllEmployee: req.body.allEmployeeCheckBox,
+    // },
   });
   console.log(user);
   const token = user.createJWT();
@@ -37,11 +38,12 @@ const CreateUser = async (req, res) => {
   res.status(StatusCodes.CREATED).json({
     user: {
       username: user.username,
+      permissions: user.permissions,
     },
   }); //remove token
 };
 const CreateEmployee = async (req, res) => {
-  const { username, password, name, permissions } = req.body;
+  const { username, password, name, permissions, isAdmin } = req.body;
 
   if (!username || !password || !name) {
     throw new BadRequestError("please provide all the values");
@@ -55,6 +57,7 @@ const CreateEmployee = async (req, res) => {
     username,
     name,
     password,
+    isAdmin: isAdmin,
     permissions: {
       addCustomer: req.body.addCustomerCheckBox,
       editAndDeleteCustomer: req.body.editDeleteEmployeeCheckBox,
